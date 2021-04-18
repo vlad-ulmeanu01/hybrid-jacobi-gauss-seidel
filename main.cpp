@@ -38,7 +38,6 @@ generate_solvable_iterative_matrix(int n, bool type) {
       W(i, i) *= n * 2;
   }
 
-
 //  Eigen::MatrixXd N = Eigen::MatrixXd::Zero(n, n);
 //  for (int i = 0; i < n; i++)
 //    N(i, i) = W(i, i);
@@ -140,24 +139,27 @@ sort_matrix_lines(Eigen::MatrixXd &M, std::function<bool(Eigen::MatrixXd &, Eige
     M.row(i) = linii[i];
 }
 
-///schimba coloanele lui A intre ele ai ordinea lor sa fie cea din vectorul permutatie dat
+///schimba ... intre ele ai ordinea lor sa fie cea din vectorul permutatie dat.
 ///perm trebuie sa fie vector linie.
-///trebuie sa schimb si ordinea lui b? nu e ca la inmultire de matrice.
-///NU trebuie sa schimb ordinea lui A???????
+///trebuie sa schimb ordinea lui b
+///trebuie sa schimb ordinea numerelor de pe ?? lui A
+///nu pusesei b.. - 1 .........
 void
-shift_columns_to_match(Eigen::MatrixXd &b, Eigen::MatrixXd perm)
+shift_columns_to_match(Eigen::MatrixXd &A, Eigen::MatrixXd &b, Eigen::MatrixXd perm)
 {
-  int n = b.rows();
+  int n = A.cols();
   std::vector<int> where(n);
   for (int i = 0; i < n; i++)
-    where[b(i, 0)] = i;
+    where[A(n, i)] = i;
 
   for (int i = 0; i < n; i++) {
     int tmp = where[perm(0, i)];
     if (tmp != i) {
       where[perm(0, i)] = i;
-      where[b(i, 0)] = tmp;
+      where[A(n, i)] = tmp;
       b.row(i).swap(b.row(tmp));
+      A.col(i).swap(A.col(tmp));
+      A.row(i).swap(A.row(tmp));
     }
   }
 }
@@ -169,10 +171,9 @@ solve_gauss_seidel_entropy (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, in
     std::cerr << "solve_gauss_seidel_entropy invalid matrices\n";
     exit(0);
   }
-  int n = A.rows();
-  A.conservativeResize(n + 1, Eigen::NoChange);
 
-  ///trebuie sa dau swap la coloanele lui A
+  int n = A.cols();
+  A.conservativeResize(n+1, Eigen::NoChange);
   for (int i = 0; i < n; i++)
     A(n, i) = i;
 
@@ -198,14 +199,14 @@ solve_gauss_seidel_entropy (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, in
       (Eigen::MatrixXd &a_, Eigen::MatrixXd &b_) {
         return fabs(a_(0, 0) - a_(0, 1)) < fabs(b_(0, 0) - b_(0, 1));
       });
-    shift_columns_to_match(b, x.col(2).transpose());
+    shift_columns_to_match(A, b, x.col(2).transpose());
   }
 
   sort_matrix_lines(x, []
   (Eigen::MatrixXd &a_, Eigen::MatrixXd &b_) {
     return a_(0, 2) < b_(0, 2);
   });
-  shift_columns_to_match(b, x.col(2).transpose());
+  shift_columns_to_match(A, b, x.col(2).transpose());
 
   return std::make_pair(x.col(0), pasi);
 }
@@ -286,10 +287,8 @@ hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double
 {
   const int num_workers = (int)std::thread::hardware_concurrency();
 
-  int n = A.rows();
-  A.conservativeResize(n + 1, Eigen::NoChange);
-
-  ///trebuie sa dau swap la coloanele lui A
+  int n = A.cols();
+  A.conservativeResize(n+1, Eigen::NoChange);
   for (int i = 0; i < n; i++)
     A(n, i) = i;
 
@@ -354,7 +353,7 @@ hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double
         return fabs(a_(0, 0) - a_(0, 1)) < fabs(b_(0, 0) - b_(0, 1));
       });
 
-    shift_columns_to_match(b, x.col(2).transpose());
+    shift_columns_to_match(A, b, x.col(2).transpose());
   }
 
   ///aduc liniile inapoi la ordinea originala
@@ -362,7 +361,7 @@ hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double
   (Eigen::MatrixXd &a_, Eigen::MatrixXd &b_) {
     return a_(0, 2) < b_(0, 2);
   });
-  shift_columns_to_match(b, x.col(2).transpose());
+  shift_columns_to_match(A, b, x.col(2).transpose());
 
   return std::make_pair(x.col(0), pasi);
 }
@@ -384,7 +383,6 @@ main()
 
   Eigen::MatrixXd A = A_r.first;
   Eigen::MatrixXd b = Eigen::MatrixXd::Random(n, 1).cwiseAbs();
-
 
   start = std::chrono::steady_clock::now();
   Eigen::MatrixXd x_precise = A.colPivHouseholderQr().solve(b);
@@ -455,7 +453,7 @@ main()
 
 
   start = std::chrono::steady_clock::now();
-  auto gs_entropy = solve_gauss_seidel_entropy(A, b, 0.00001, 5);
+  auto gs_entropy = solve_gauss_seidel_entropy(A, b, 0.00001, 100);
 
   stop = std::chrono::steady_clock::now();
   auto duration_gs_entropy = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
@@ -469,7 +467,7 @@ main()
 
 
   start = std::chrono::steady_clock::now();
-  auto hybrid_entropy = hybrid_entropy_jacobi_gauss_seidel(A, b, 0.00001, 5);
+  auto hybrid_entropy = hybrid_entropy_jacobi_gauss_seidel(A, b, 0.00001, 100);
 
   stop = std::chrono::steady_clock::now();
   auto duration_hybrid_entropy = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
