@@ -17,34 +17,85 @@
 ///Explanation: Gauss-Seidel method is applicable to strictly diagonally dominant or
 ///symmetric positive definite matrices because only in this case convergence is possible.
 
+namespace Eigen {
+  void operator ^= (Eigen::MatrixXd &A, int e) {
+    assert(A.rows() == A.cols() && e >= 0);
+    int n = A.rows();
+    Eigen::MatrixXd Ans = Eigen::MatrixXd::Zero(n, n);
+    for (int i = 0; i < n; i++)
+      Ans(i, i) = 1;
+    while (e) {
+      if (e&1)
+        Ans *= A;
+      e >>= 1;
+      A *= A;
+    }
+    A = Ans;
+  }
+}
+
+double
+spectral_radius (Eigen::MatrixXd A_e)
+{
+  assert(A_e.rows() == A_e.cols());
+  int e = 100, n = A_e.rows();
+  Eigen::MatrixXd A_e1 = A_e;
+  A_e ^= e; ///A^e
+  A_e1 *= A_e; ///A^(e+1) => lb_1 = (A_e1 * u)(1) / (A_e * u)(1)
+  Eigen::MatrixXd u = Eigen::MatrixXd::Random(n, 1);
+  return fabs((A_e1 * u)(0, 0) / (A_e * u)(0, 0));
+}
+
+Eigen::MatrixXd
+inverse_inferior_triangular (Eigen::MatrixXd A) {
+  assert(A.rows() == A.cols());
+  int n = A.rows();
+  double eps = 1e-5;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      if (i < j)
+        assert(fabs(A(i, j)) < eps);
+  Eigen::MatrixXd B = Eigen::MatrixXd::Zero(n, n);
+  for (int i = 0; i < n; i++) {
+    B(i, i) = 1 / A(i, i);
+    for (int j = i-1; j >= 0; j--) {
+      B(i, j) = - (A.row(i).segment(j, i-j) * B.col(j).segment(j, i-j))(0, 0) * B(i, i);
+      ///!!segment are al doilea arg lungimea, nu capatul din dreapta
+    }
+  }
+  return B;
+}
+
+
 std::pair<Eigen::MatrixXd, double>
 generate_solvable_iterative_matrix(int n, bool type) {
   Eigen::MatrixXd W = Eigen::MatrixXd::Random(n, n).cwiseAbs();
 
-  if (type == false) {
-    Eigen::MatrixXd rand_coef = Eigen::MatrixXd::Random(1, n).cwiseAbs();
-
-    ///matrice diagonal dominanta
-    for (int i = 0; i < n; i++) {
-      double oth = W.row(i).sum() - W(i, i);
-      W(i, i) = (1 + 0.25 * rand_coef(0, i)) * oth;
-    }
-  } else {
+  if (type == true) {
+    double coef_jos = 0.001, coef_sus = 1000;
     for (int i = 0; i < n; i++)
-      for (int j = i+1; j < n; j++)
-        W(i, j) = W(j, i);
-
-    for (int i = 0; i < n; i++)
-      W(i, i) *= n * 2;
+      for (int j = 0; j < n; j++)
+        if (i > j)
+          W(i, j) *= coef_jos;
+        else if (i < j)
+          W(i, j) *= coef_sus;
   }
 
-//  Eigen::MatrixXd N = Eigen::MatrixXd::Zero(n, n);
-//  for (int i = 0; i < n; i++)
-//    N(i, i) = W(i, i);
-//  Eigen::MatrixXd P = N - W, inv_N = N.inverse();
-//  double rad_spectrum = (inv_N * P).eigenvalues().cwiseAbs().lpNorm<Eigen::Infinity>();
+  Eigen::MatrixXd rand_coef = Eigen::MatrixXd::Random(1, n).cwiseAbs();
 
-  double rad_spectrum = 0;
+  ///matrice diagonal dominanta
+  for (int i = 0; i < n; i++) {
+    double oth = W.row(i).sum() - W(i, i);
+    W(i, i) = (1 + 0.25 * rand_coef(0, i)) * oth;
+  }
+
+  Eigen::MatrixXd N = Eigen::MatrixXd::Zero(n, n);
+  for (int i = 0; i < n; i++)
+    N(i, i) = W(i, i);
+  Eigen::MatrixXd P = N - W, inv_N = inverse_inferior_triangular(N);
+  double rad_spectrum = spectral_radius(inv_N * P);
+
+//  double rad_spectrum = 0;
 
   return std::make_pair(W, rad_spectrum);
 }
@@ -134,7 +185,7 @@ sort_matrix_lines(Eigen::MatrixXd &M, std::function<bool(Eigen::MatrixXd &, Eige
   std::vector<Eigen::MatrixXd> linii;
   for (int i = 0; i < n; i++)
     linii.push_back(M.row(i));
-  std::sort(linii.begin(), linii.end(), cmp);
+  std::sort(linii.begin(), linii.end(), cmp); ///nu stie stable_sort??
   for (int i = 0; i < n; i++)
     M.row(i) = linii[i];
 }
@@ -378,7 +429,7 @@ main()
   int n;
   std::cin >> n;
 
-  auto A_r = generate_solvable_iterative_matrix(n, false);
+  auto A_r = generate_solvable_iterative_matrix(n, true);
   std::cout << "Matricea A are Rho: " << A_r.second << '\n';
 
   Eigen::MatrixXd A = A_r.first;
