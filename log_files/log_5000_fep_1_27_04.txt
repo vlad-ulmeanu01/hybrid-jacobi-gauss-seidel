@@ -1,0 +1,29 @@
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$ ./main
+5000
+Matricea A are Rho: 0.876205
+timp hholder: 70.1015s
+-------------
+4.28151e-06
+pasi jacobi: 53
+timp jacobi: 22.0873s
+-------------
+4.03241e-06
+pasi gauss_seidel: 37
+timp gauss_seidel: 21.5462s
+-------------
+9.32178e-06
+pasi gauss_seidel_analytic: 37
+timp gauss_seidel_analytic: 11.7082s
+-------------
+4.12768e-06
+pasi hibrid: 37
+timp hibrid: 6.44524s
+-------------
+0.00188733
+pasi gs entropy: 100
+timp gs entropy: 126.86s
+-------------
+1.4562e-06
+pasi hibrid entropy: 43
+timp hibrid entropy: 46.9534s
+-------------

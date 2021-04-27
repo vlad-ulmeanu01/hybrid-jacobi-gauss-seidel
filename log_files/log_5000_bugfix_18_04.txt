@@ -1,0 +1,27 @@
+5000
+Matricea A are Rho: 0
+timp hholder: 51.4327s
+-------------
+4.23901e-006
+pasi jacobi: 29
+timp jacobi: 124.764s
+-------------
+6.21108e-007
+pasi gauss_seidel: 4
+timp gauss_seidel: 122.728s
+-------------
+7.02737e-007
+pasi gauss_seidel_analytic: 4
+timp gauss_seidel_analytic: 0.767964s
+-------------
+7.09235e-007
+pasi hibrid: 4
+timp hibrid: 0.367679s
+-------------
+1.78776e-006
+pasi gs entropy: 4
+timp gs entropy: 4.49805s
+-------------
+1.91434e-006
+pasi hibrid entropy: 4
+timp hibrid entropy: 3.90718s

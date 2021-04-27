@@ -179,13 +179,14 @@ solve_gauss_seidel_analytic (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, i
 }
 
 void
-sort_matrix_lines(Eigen::MatrixXd &M, std::function<bool(Eigen::MatrixXd &, Eigen::MatrixXd &)> cmp)
+sort_matrix_lines(Eigen::MatrixXd &M,
+                  std::function<bool(const Eigen::MatrixXd &, const Eigen::MatrixXd &)> cmp)
 {
   int n = M.rows();
   std::vector<Eigen::MatrixXd> linii;
   for (int i = 0; i < n; i++)
     linii.push_back(M.row(i));
-  std::sort(linii.begin(), linii.end(), cmp); ///nu stie stable_sort??
+  std::stable_sort(linii.begin(), linii.end(), cmp);
   for (int i = 0; i < n; i++)
     M.row(i) = linii[i];
 }
@@ -247,14 +248,14 @@ solve_gauss_seidel_entropy (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, in
     pasi++;
 
     sort_matrix_lines(x, []
-      (Eigen::MatrixXd &a_, Eigen::MatrixXd &b_) {
+      (const Eigen::MatrixXd &a_, const Eigen::MatrixXd &b_) {
         return fabs(a_(0, 0) - a_(0, 1)) < fabs(b_(0, 0) - b_(0, 1));
       });
     shift_columns_to_match(A, b, x.col(2).transpose());
   }
 
   sort_matrix_lines(x, []
-  (Eigen::MatrixXd &a_, Eigen::MatrixXd &b_) {
+  (const Eigen::MatrixXd &a_, const Eigen::MatrixXd &b_) {
     return a_(0, 2) < b_(0, 2);
   });
   shift_columns_to_match(A, b, x.col(2).transpose());
@@ -283,12 +284,13 @@ hybrid_parallel_function (Eigen::MatrixXd &A, Eigen::MatrixXd &b, Eigen::MatrixX
   }
 }
 
+///ct_bsz * sqrt(n) == bucket_size. bucket_size == 1 ar fi ideal, dar exista overhead pt calcul in paralel
 std::pair<Eigen::MatrixXd, int>
-hybrid_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi)
+hybrid_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi, double ct_bsz)
 {
   const int num_workers = (int)std::thread::hardware_concurrency();
 
-  int n = A.rows(), bucket_size = sqrt(n), remaining = 0;
+  int n = A.rows(), bucket_size = ct_bsz * sqrt(n), remaining = 0;
   std::vector<int> ends_of_buckets;
 
   for (int i = 0; i < n; i++) {
@@ -333,8 +335,9 @@ hybrid_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, in
   return std::make_pair(x, pasi);
 }
 
+///ct_bsz * sqrt(n) == bucket_size. bucket_size == 1 ar fi ideal, dar exista overhead pt calcul in paralel
 std::pair<Eigen::MatrixXd, int>
-hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi)
+hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi, double ct_bsz)
 {
   const int num_workers = (int)std::thread::hardware_concurrency();
 
@@ -343,7 +346,7 @@ hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double
   for (int i = 0; i < n; i++)
     A(n, i) = i;
 
-  int bucket_size = sqrt(n), remaining = 0;
+  int bucket_size = ct_bsz * sqrt(n), remaining = 0;
   std::vector<int> ends_of_buckets;
 
   for (int i = 0; i < n; i++) {
@@ -400,7 +403,7 @@ hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double
     ///sortez liniile ai cele care s-au modificat cel mai mult sa fie la coada (sa profite mai mult la
     ///urmatoarele iteratii)
     sort_matrix_lines(x, []
-      (Eigen::MatrixXd &a_, Eigen::MatrixXd &b_) {
+      (const Eigen::MatrixXd &a_, const Eigen::MatrixXd &b_) {
         return fabs(a_(0, 0) - a_(0, 1)) < fabs(b_(0, 0) - b_(0, 1));
       });
 
@@ -409,12 +412,58 @@ hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double
 
   ///aduc liniile inapoi la ordinea originala
   sort_matrix_lines(x, []
-  (Eigen::MatrixXd &a_, Eigen::MatrixXd &b_) {
+  (const Eigen::MatrixXd &a_, const Eigen::MatrixXd &b_) {
     return a_(0, 2) < b_(0, 2);
   });
   shift_columns_to_match(A, b, x.col(2).transpose());
 
   return std::make_pair(x.col(0), pasi);
+}
+
+void
+jacobi_parallel_function (Eigen::MatrixXd &A, Eigen::MatrixXd &b, Eigen::MatrixXd &x,
+                          Eigen::MatrixXd &x0, int n, int start_itv, int end_itv)
+{
+  assert(start_itv >= 0 && start_itv < n && end_itv >= 0 && end_itv < n);
+  for (int i = start_itv; i <= end_itv; i++) {
+    x(i, 0) = b(i, 0);
+    x(i, 0) -= A.row(i).segment(0, n) * x0.col(0).segment(0, n);
+    x(i, 0) += A(i, i) * x0(i, 0);
+    x(i, 0) /= A(i, i);
+  }
+}
+
+std::pair<Eigen::MatrixXd, int>
+solve_jacobi_analytic_parallel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi)
+{
+  const int num_workers = (int)std::thread::hardware_concurrency();
+  int n = A.rows();
+
+  Eigen::MatrixXd x = Eigen::MatrixXd::Zero(n, 1), x0 = x;
+  std::vector<std::thread> threads;
+  int pasi = 0, worker_length, start_itv, end_itv;
+
+  worker_length = (n + num_workers - 1) / num_workers;
+
+  while (pasi == 0 || (pasi < max_pasi && (x - x0).lpNorm<Eigen::Infinity>() > tol)) {
+    x0 = x;
+
+    threads.clear();
+    for (int i = 0; i < num_workers; i++) {
+      start_itv = i * worker_length;
+      end_itv = std::min((i+1) * worker_length - 1, n-1);
+
+      std::thread th(jacobi_parallel_function, std::ref(A), std::ref(b), std::ref(x), std::ref(x0),
+                     n, start_itv, end_itv);
+      threads.push_back(std::move(th));
+    }
+
+    for (int i = 0; i < num_workers; i++)
+      threads[i].join();
+
+    pasi++;
+  }
+  return std::make_pair(x, pasi);
 }
 
 int
@@ -474,6 +523,21 @@ main()
 
 
   start = std::chrono::steady_clock::now();
+  auto jacobi_parallel = solve_jacobi_analytic_parallel(A, b, 0.00001, 10000);
+
+  stop = std::chrono::steady_clock::now();
+  auto duration_jacobi_parallel = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+  Eigen::MatrixXd x_jacobi_parallel = jacobi_parallel.first;
+  int pasi_jacobi_parallel = jacobi_parallel.second;
+
+  std::cout << (x_jacobi_parallel - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+  std::cout << "pasi jacobi_parallel: " << pasi_jacobi_parallel << '\n';
+  std::cout << "timp jacobi_parallel: " << duration_jacobi_parallel.count() / 1000000.0 << "s\n-------------\n";
+
+
+
+  start = std::chrono::steady_clock::now();
   auto gauss_seidel_analytic = solve_gauss_seidel_analytic(A, b, 0.00001, 10000);
 
   stop = std::chrono::steady_clock::now();
@@ -489,7 +553,7 @@ main()
 
 
   start = std::chrono::steady_clock::now();
-  auto hybrid = hybrid_jacobi_gauss_seidel(A, b, 0.00001, 10000);
+  auto hybrid = hybrid_jacobi_gauss_seidel(A, b, 0.00001, 10000, 5.0);
 
   stop = std::chrono::steady_clock::now();
   auto duration_hybrid = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
@@ -518,7 +582,7 @@ main()
 
 
   start = std::chrono::steady_clock::now();
-  auto hybrid_entropy = hybrid_entropy_jacobi_gauss_seidel(A, b, 0.00001, 100);
+  auto hybrid_entropy = hybrid_entropy_jacobi_gauss_seidel(A, b, 0.00001, 100, 5.0);
 
   stop = std::chrono::steady_clock::now();
   auto duration_hybrid_entropy = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
