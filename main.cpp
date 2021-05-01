@@ -34,15 +34,24 @@ namespace Eigen {
   }
 }
 
+Eigen::MatrixXd generate_random_matrix_mt (std::mt19937 &mt, int n, int m, double mi, double Ma) {
+  std::uniform_real_distribution<double> distr(mi, Ma);
+  Eigen::MatrixXd A(n, m);
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
+      A(i, j) = distr(mt);
+  return A;
+}
+
 double
-spectral_radius (Eigen::MatrixXd A_e)
+spectral_radius (std::mt19937 &mt, Eigen::MatrixXd A_e)
 {
   assert(A_e.rows() == A_e.cols());
   int e = 100, n = A_e.rows();
   Eigen::MatrixXd A_e1 = A_e;
   A_e ^= e; ///A^e
   A_e1 *= A_e; ///A^(e+1) => lb_1 = (A_e1 * u)(1) / (A_e * u)(1)
-  Eigen::MatrixXd u = Eigen::MatrixXd::Random(n, 1);
+  Eigen::MatrixXd u = generate_random_matrix_mt(mt, n, 1, 0, 1);
   return fabs((A_e1 * u)(0, 0) / (A_e * u)(0, 0));
 }
 
@@ -68,11 +77,13 @@ inverse_inferior_triangular (Eigen::MatrixXd A) {
 
 
 std::pair<Eigen::MatrixXd, double>
-generate_solvable_iterative_matrix(int n, bool type) {
-  Eigen::MatrixXd W = Eigen::MatrixXd::Random(n, n).cwiseAbs();
+generate_solvable_iterative_matrix
+(std::mt19937 &mt, int n, bool type, double coef_a, bool should_calculate_radial_spectrum) {
+  ///daca e 1000.0 sunt rezultate wow, nr mai mic de pasi pt hibrid etc
+  Eigen::MatrixXd W = generate_random_matrix_mt(mt, n, n, 0, coef_a); ///coef_a: coef marime A
 
   if (type == true) {
-    double coef_jos = 0.001, coef_sus = 1000;
+    double coef_jos = 0.001 / coef_a, coef_sus = 1000 * coef_a;
     for (int i = 0; i < n; i++)
       for (int j = 0; j < n; j++)
         if (i > j)
@@ -81,7 +92,7 @@ generate_solvable_iterative_matrix(int n, bool type) {
           W(i, j) *= coef_sus;
   }
 
-  Eigen::MatrixXd rand_coef = Eigen::MatrixXd::Random(1, n).cwiseAbs();
+  Eigen::MatrixXd rand_coef = generate_random_matrix_mt(mt, 1, n, 0, 1); ///poate pui aici > 1
 
   ///matrice diagonal dominanta
   for (int i = 0; i < n; i++) {
@@ -89,13 +100,15 @@ generate_solvable_iterative_matrix(int n, bool type) {
     W(i, i) = (1 + 0.25 * rand_coef(0, i)) * oth;
   }
 
-  Eigen::MatrixXd N = Eigen::MatrixXd::Zero(n, n);
-  for (int i = 0; i < n; i++)
-    N(i, i) = W(i, i);
-  Eigen::MatrixXd P = N - W, inv_N = inverse_inferior_triangular(N);
-  double rad_spectrum = spectral_radius(inv_N * P);
-
-//  double rad_spectrum = 0;
+  double rad_spectrum = 0;
+  if (should_calculate_radial_spectrum)
+  {
+    Eigen::MatrixXd N = Eigen::MatrixXd::Zero(n, n);
+    for (int i = 0; i < n; i++)
+      N(i, i) = W(i, i);
+    Eigen::MatrixXd P = N - W, inv_N = inverse_inferior_triangular(N);
+    rad_spectrum = spectral_radius(mt, inv_N * P);
+  }
 
   return std::make_pair(W, rad_spectrum);
 }
@@ -186,7 +199,7 @@ sort_matrix_lines(Eigen::MatrixXd &M,
   std::vector<Eigen::MatrixXd> linii;
   for (int i = 0; i < n; i++)
     linii.push_back(M.row(i));
-  std::stable_sort(linii.begin(), linii.end(), cmp);
+  std::stable_sort(linii.begin(), linii.end(), cmp); ///nu stie stable_sort??
   for (int i = 0; i < n; i++)
     M.row(i) = linii[i];
 }
@@ -284,7 +297,7 @@ hybrid_parallel_function (Eigen::MatrixXd &A, Eigen::MatrixXd &b, Eigen::MatrixX
   }
 }
 
-///ct_bsz * sqrt(n) == bucket_size. bucket_size == 1 ar fi ideal, dar exista overhead pt calcul in paralel
+///ct_bsz * sqrt(n) == bucket_size. bucket_size < 1 ar fi ideal, dar exista overhead pt calcul in paralel
 std::pair<Eigen::MatrixXd, int>
 hybrid_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi, double ct_bsz)
 {
@@ -335,7 +348,7 @@ hybrid_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, in
   return std::make_pair(x, pasi);
 }
 
-///ct_bsz * sqrt(n) == bucket_size. bucket_size == 1 ar fi ideal, dar exista overhead pt calcul in paralel
+///ct_bsz * sqrt(n) == bucket_size. bucket_size < 1 ar fi ideal, dar exista overhead pt calcul in paralel
 std::pair<Eigen::MatrixXd, int>
 hybrid_entropy_jacobi_gauss_seidel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi, double ct_bsz)
 {
@@ -466,133 +479,247 @@ solve_jacobi_analytic_parallel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol
   return std::make_pair(x, pasi);
 }
 
-int
-main()
+void
+one_simulation (std::mt19937 &mt, int n, int nt, double bucketsize_coefficient,
+                double coef_a, double coef_b, bool should_differentiate_generated_matrix_weight)
 {
-  Eigen::initParallel(); ///nu ajuta, dar ar tb pus pt ca folosesc si eu op mele in paralel
+  std::cout << "Test number " << nt << ", bsz_ct " << bucketsize_coefficient << "\n-------------\n";
+
+  bool should_generate_solution = false,
+       should_calculate_radial_spectrum = false,
+       should_solve_jacobi = false,
+       should_solve_gauss_seidel = false,
+       should_solve_jacobi_analytic_parallel = true,
+       should_solve_gauss_seidel_analytic = true,
+       should_hybrid_jacobi_gauss_seidel = true,
+       should_solve_gauss_seidel_entropy = false,
+       should_hybrid_entropy_jacobi_gauss_seidel = false;
 
   auto start = std::chrono::steady_clock::now(), stop = std::chrono::steady_clock::now();
 
-  srand(time(NULL));
-
-  int n;
-  std::cin >> n;
-
-  auto A_r = generate_solvable_iterative_matrix(n, true);
+  auto A_r = generate_solvable_iterative_matrix
+             (mt, n, should_differentiate_generated_matrix_weight, coef_a, should_calculate_radial_spectrum);
+  ///true = greutate shiftata peste diagonala principala.
   std::cout << "Matricea A are Rho: " << A_r.second << '\n';
 
   Eigen::MatrixXd A = A_r.first;
-  Eigen::MatrixXd b = Eigen::MatrixXd::Random(n, 1).cwiseAbs();
 
-  start = std::chrono::steady_clock::now();
-  Eigen::MatrixXd x_precise = A.colPivHouseholderQr().solve(b);
-  stop = std::chrono::steady_clock::now();
-  auto duration_hholder = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  std::cout << "timp hholder: " << duration_hholder.count() / 1000000.0 << "s\n-------------\n";
-//  Eigen::MatrixXd x_precise = Eigen::MatrixXd::Zero(n, 1);
+  Eigen::MatrixXd b = generate_random_matrix_mt(mt, n, 1, 0, coef_b);
 
+  Eigen::MatrixXd x_precise;
 
-  start = std::chrono::steady_clock::now();
-  auto jacobi = solve_jacobi(A, b, 0.00001, 10000);
+  if (should_generate_solution)
+  {
+    start = std::chrono::steady_clock::now();
+    x_precise = A.colPivHouseholderQr().solve(b);
+    stop = std::chrono::steady_clock::now();
+    auto duration_hholder = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    std::cout << "timp hholder: " << duration_hholder.count() / 1000000.0 << "s\n-------------\n";
+  }
+  else
+  {
+    x_precise = Eigen::MatrixXd::Zero(n, 1);
+  }
 
-  stop = std::chrono::steady_clock::now();
-  auto duration_jacobi = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+  if (should_solve_jacobi)
+  {
+    start = std::chrono::steady_clock::now();
+    auto jacobi = solve_jacobi(A, b, 0.00001, 10000);
 
-  Eigen::MatrixXd x_jacobi = jacobi.first;
-  int pasi_jacobi = jacobi.second;
+    stop = std::chrono::steady_clock::now();
+    auto duration_jacobi = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-  std::cout << (x_jacobi - x_precise).lpNorm<Eigen::Infinity>() << '\n';
-  std::cout << "pasi jacobi: " << pasi_jacobi << '\n';
-  std::cout << "timp jacobi: " << duration_jacobi.count() / 1000000.0 << "s\n-------------\n";
+    Eigen::MatrixXd x_jacobi = jacobi.first;
+    int pasi_jacobi = jacobi.second;
 
-
-
-  start = std::chrono::steady_clock::now();
-  auto gauss_seidel = solve_gauss_seidel(A, b, 0.00001, 10000);
-
-  stop = std::chrono::steady_clock::now();
-  auto duration_gauss_seidel = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-
-  Eigen::MatrixXd x_gauss_seidel = gauss_seidel.first;
-  int pasi_gauss_seidel = gauss_seidel.second;
-
-  std::cout << (x_gauss_seidel - x_precise).lpNorm<Eigen::Infinity>() << '\n';
-  std::cout << "pasi gauss_seidel: " << pasi_gauss_seidel << '\n';
-  std::cout << "timp gauss_seidel: " << duration_gauss_seidel.count() / 1000000.0 << "s\n-------------\n";
+    std::cout << (x_jacobi - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi jacobi: " << pasi_jacobi << '\n';
+    std::cout << "timp jacobi: " << duration_jacobi.count() / 1000000.0 << "s\n-------------\n";
+  }
 
 
+  if (should_solve_gauss_seidel)
+  {
+    start = std::chrono::steady_clock::now();
+    auto gauss_seidel = solve_gauss_seidel(A, b, 0.00001, 10000);
 
-  start = std::chrono::steady_clock::now();
-  auto jacobi_parallel = solve_jacobi_analytic_parallel(A, b, 0.00001, 10000);
+    stop = std::chrono::steady_clock::now();
+    auto duration_gauss_seidel = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-  stop = std::chrono::steady_clock::now();
-  auto duration_jacobi_parallel = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    Eigen::MatrixXd x_gauss_seidel = gauss_seidel.first;
+    int pasi_gauss_seidel = gauss_seidel.second;
 
-  Eigen::MatrixXd x_jacobi_parallel = jacobi_parallel.first;
-  int pasi_jacobi_parallel = jacobi_parallel.second;
-
-  std::cout << (x_jacobi_parallel - x_precise).lpNorm<Eigen::Infinity>() << '\n';
-  std::cout << "pasi jacobi_parallel: " << pasi_jacobi_parallel << '\n';
-  std::cout << "timp jacobi_parallel: " << duration_jacobi_parallel.count() / 1000000.0 << "s\n-------------\n";
-
-
-
-  start = std::chrono::steady_clock::now();
-  auto gauss_seidel_analytic = solve_gauss_seidel_analytic(A, b, 0.00001, 10000);
-
-  stop = std::chrono::steady_clock::now();
-  auto duration_gauss_seidel_analytic = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-
-  Eigen::MatrixXd x_gauss_seidel_analytic = gauss_seidel_analytic.first;
-  int pasi_gauss_seidel_analytic = gauss_seidel_analytic.second;
-
-  std::cout << (x_gauss_seidel_analytic - x_precise).lpNorm<Eigen::Infinity>() << '\n';
-  std::cout << "pasi gauss_seidel_analytic: " << pasi_gauss_seidel_analytic << '\n';
-  std::cout << "timp gauss_seidel_analytic: " << duration_gauss_seidel_analytic.count() / 1000000.0 << "s\n-------------\n";
+    std::cout << (x_gauss_seidel - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi gauss_seidel: " << pasi_gauss_seidel << '\n';
+    std::cout << "timp gauss_seidel: " << duration_gauss_seidel.count() / 1000000.0 << "s\n-------------\n";
+  }
 
 
+  if (should_solve_jacobi_analytic_parallel)
+  {
+    start = std::chrono::steady_clock::now();
+    auto jacobi_parallel = solve_jacobi_analytic_parallel(A, b, 0.00001, 10000);
 
-  start = std::chrono::steady_clock::now();
-  auto hybrid = hybrid_jacobi_gauss_seidel(A, b, 0.00001, 10000, 5.0);
+    stop = std::chrono::steady_clock::now();
+    auto duration_jacobi_parallel = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-  stop = std::chrono::steady_clock::now();
-  auto duration_hybrid = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    Eigen::MatrixXd x_jacobi_parallel = jacobi_parallel.first;
+    int pasi_jacobi_parallel = jacobi_parallel.second;
 
-  Eigen::MatrixXd x_hybrid = hybrid.first;
-  int pasi_hybrid = hybrid.second;
-
-  std::cout << (x_hybrid - x_precise).lpNorm<Eigen::Infinity>() << '\n';
-  std::cout << "pasi hibrid: " << pasi_hybrid << '\n';
-  std::cout << "timp hibrid: " << duration_hybrid.count() / 1000000.0 << "s\n-------------\n";
-
-
-
-  start = std::chrono::steady_clock::now();
-  auto gs_entropy = solve_gauss_seidel_entropy(A, b, 0.00001, 100);
-
-  stop = std::chrono::steady_clock::now();
-  auto duration_gs_entropy = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-
-  Eigen::MatrixXd x_gs_entropy = gs_entropy.first;
-  int pasi_gs_entropy = gs_entropy.second;
-
-  std::cout << (x_gs_entropy - x_precise).lpNorm<Eigen::Infinity>() << '\n';
-  std::cout << "pasi gs entropy: " << pasi_gs_entropy << '\n';
-  std::cout << "timp gs entropy: " << duration_gs_entropy.count() / 1000000.0 << "s\n-------------\n";
+    std::cout << (x_jacobi_parallel - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi jacobi_parallel: " << pasi_jacobi_parallel << '\n';
+    std::cout << "timp jacobi_parallel: " << duration_jacobi_parallel.count() / 1000000.0 << "s\n-------------\n";
+  }
 
 
-  start = std::chrono::steady_clock::now();
-  auto hybrid_entropy = hybrid_entropy_jacobi_gauss_seidel(A, b, 0.00001, 100, 5.0);
+  if (should_solve_gauss_seidel_analytic)
+  {
+    start = std::chrono::steady_clock::now();
+    auto gauss_seidel_analytic = solve_gauss_seidel_analytic(A, b, 0.00001, 10000);
 
-  stop = std::chrono::steady_clock::now();
-  auto duration_hybrid_entropy = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    stop = std::chrono::steady_clock::now();
+    auto duration_gauss_seidel_analytic = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-  Eigen::MatrixXd x_hybrid_entropy = hybrid_entropy.first;
-  int pasi_hybrid_entropy = hybrid_entropy.second;
+    Eigen::MatrixXd x_gauss_seidel_analytic = gauss_seidel_analytic.first;
+    int pasi_gauss_seidel_analytic = gauss_seidel_analytic.second;
 
-  std::cout << (x_hybrid_entropy - x_precise).lpNorm<Eigen::Infinity>() << '\n';
-  std::cout << "pasi hibrid entropy: " << pasi_hybrid_entropy << '\n';
-  std::cout << "timp hibrid entropy: " << duration_hybrid_entropy.count() / 1000000.0 << "s\n-------------\n";
+    std::cout << (x_gauss_seidel_analytic - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi gauss_seidel_analytic: " << pasi_gauss_seidel_analytic << '\n';
+    std::cout << "timp gauss_seidel_analytic: " << duration_gauss_seidel_analytic.count() / 1000000.0 << "s\n-------------\n";
+  }
 
+
+  if (should_hybrid_jacobi_gauss_seidel)
+  {
+    start = std::chrono::steady_clock::now();
+    auto hybrid = hybrid_jacobi_gauss_seidel(A, b, 0.00001, 10000, bucketsize_coefficient);
+
+    stop = std::chrono::steady_clock::now();
+    auto duration_hybrid = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+    Eigen::MatrixXd x_hybrid = hybrid.first;
+    int pasi_hybrid = hybrid.second;
+
+    std::cout << (x_hybrid - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi hibrid: " << pasi_hybrid << '\n';
+    std::cout << "timp hibrid: " << duration_hybrid.count() / 1000000.0 << "s\n-------------\n";
+  }
+
+  if (should_solve_gauss_seidel_entropy)
+  {
+    start = std::chrono::steady_clock::now();
+    auto gs_entropy = solve_gauss_seidel_entropy(A, b, 0.00001, 100);
+
+    stop = std::chrono::steady_clock::now();
+    auto duration_gs_entropy = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+    Eigen::MatrixXd x_gs_entropy = gs_entropy.first;
+    int pasi_gs_entropy = gs_entropy.second;
+
+    std::cout << (x_gs_entropy - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi gs entropy: " << pasi_gs_entropy << '\n';
+    std::cout << "timp gs entropy: " << duration_gs_entropy.count() / 1000000.0 << "s\n-------------\n";
+  }
+
+  if (should_hybrid_entropy_jacobi_gauss_seidel)
+  {
+    start = std::chrono::steady_clock::now();
+    auto hybrid_entropy = hybrid_entropy_jacobi_gauss_seidel(A, b, 0.00001, 100, bucketsize_coefficient);
+
+    stop = std::chrono::steady_clock::now();
+    auto duration_hybrid_entropy = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+    Eigen::MatrixXd x_hybrid_entropy = hybrid_entropy.first;
+    int pasi_hybrid_entropy = hybrid_entropy.second;
+
+    std::cout << (x_hybrid_entropy - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi hibrid entropy: " << pasi_hybrid_entropy << '\n';
+    std::cout << "timp hibrid entropy: " << duration_hybrid_entropy.count() / 1000000.0 << "s\n-------------\n";
+  }
+}
+
+int
+main()
+{
+  Eigen::initParallel();
+  ///nu ajuta pt versiunea asta Eigen, dar ar tb pus pt ca folosesc si eu op mele in paralel
+  std::mt19937 mt = std::mt19937();
+  mt.seed(time(NULL));
+
+  int n, num_tests[8] = {0};
+
+  std::cout << "NUMBER OF THREADS: " << std::thread::hardware_concurrency() << '\n' << std::flush;
+
+  std::cout << "Matrix dimension: " << std::flush;
+  std::cin >> n;
+  std::cout << "Number of tests (variating bucketsize coefficient, a_coef 1, b_coef 1, eq weight): " << std::flush;
+  std::cin >> num_tests[0];
+  std::cout << "Number of tests (variating bucketsize coefficient, a_coef 1000, b_coef 1000, eq weight): " << std::flush;
+  std::cin >> num_tests[1];
+  std::cout << "Number of tests (variating bucketsize coefficient, a_coef 1, b_coef 1, diff weight): " << std::flush;
+  std::cin >> num_tests[2];
+  std::cout << "Number of tests (variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight): " << std::flush;
+  std::cin >> num_tests[3];
+
+  std::cout << "Number of tests (fixed bucketsize coefficient = sqrt(n)/2, a_coef 1, b_coef 1, eq weight): " << std::flush;
+  std::cin >> num_tests[4];
+  std::cout << "Number of tests (fixed bucketsize coefficient = sqrt(n)/2, a_coef 1000, b_coef 1000, eq weight): " << std::flush;
+  std::cin >> num_tests[5];
+  std::cout << "Number of tests (fixed bucketsize coefficient = sqrt(n)/2, a_coef 1, b_coef 1, diff weight): " << std::flush;
+  std::cin >> num_tests[6];
+  std::cout << "Number of tests (fixed bucketsize coefficient = sqrt(n)/2, a_coef 1000, b_coef 1000, diff weight): " << std::flush;
+  std::cin >> num_tests[7];
+
+  std::uniform_int_distribution<int> distr_int(0, 100);
+
+  std::cout << "\n\n(variating bucketsize coefficient, a_coef 1, b_coef 1, eq weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[0]; nt++) {
+    one_simulation(mt, n, nt, distr_int(mt), 1.0, 1.0, false);
+    std::cout << std::flush;
+  }
+
+  std::cout << "\n\n(variating bucketsize coefficient, a_coef 1000, b_coef 1000, eq weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[1]; nt++) {
+    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0, false);
+    std::cout << std::flush;
+  }
+
+  std::cout << "\n\n(variating bucketsize coefficient, a_coef 1, b_coef 1, diff weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[2]; nt++) {
+    one_simulation(mt, n, nt, distr_int(mt), 1.0, 1.0, true);
+    std::cout << std::flush;
+  }
+
+  std::cout << "\n\n(variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[3]; nt++) {
+    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0, true);
+    std::cout << std::flush;
+  }
+
+
+
+  std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1, b_coef 1, eq weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[4]; nt++) {
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1.0, 1.0, false);
+    std::cout << std::flush;
+  }
+
+  std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1000, b_coef 1000, eq weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[5]; nt++) {
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1000.0, 1000.0, false);
+    std::cout << std::flush;
+  }
+
+  std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1, b_coef 1, diff weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[6]; nt++) {
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1.0, 1.0, true);
+    std::cout << std::flush;
+  }
+
+  std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1000, b_coef 1000, diff weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[7]; nt++) {
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1000.0, 1000.0, true);
+    std::cout << std::flush;
+  }
   return 0;
 }

@@ -1,0 +1,161 @@
+comparatie coef bsz subunitar 0.5..1 cu coef cel mai bun > 1 (~36.5) (A 1000X b 1000x)
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$ ./main
+5000 100
+Test number 1, bsz_ct 36.3553
+-------------
+Matricea A are Rho: 0
+24.6285
+pasi jacobi_parallel: 128
+timp jacobi_parallel: 21.5589s
+-------------
+24.6209
+pasi gauss_seidel_analytic: 79
+timp gauss_seidel_analytic: 26.7946s
+-------------
+24.6285
+pasi hibrid: 38
+timp hibrid: 7.44423s
+-------------
+Test number 2, bsz_ct 0.95
+-------------
+Matricea A are Rho: 0
+229.629
+pasi jacobi_parallel: 130
+timp jacobi_parallel: 23.7191s
+-------------
+229.588
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 26.7617s
+-------------
+229.629
+pasi hibrid: 84
+timp hibrid: 16.6424s
+-------------
+Test number 3, bsz_ct 0.88
+-------------
+Matricea A are Rho: 0
+31.3562
+pasi jacobi_parallel: 120
+timp jacobi_parallel: 22.6871s
+-------------
+31.3537
+pasi gauss_seidel_analytic: 75
+timp gauss_seidel_analytic: 25.1074s
+-------------
+31.3561
+pasi hibrid: 75
+timp hibrid: 16.5919s
+-------------
+Test number 4, bsz_ct 0.58
+-------------
+Matricea A are Rho: 0
+218.436
+pasi jacobi_parallel: 129
+timp jacobi_parallel: 22.2359s
+-------------
+218.391
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 27.2542s
+-------------
+218.439
+pasi hibrid: 83
+timp hibrid: 16.9042s
+-------------
+Test number 5, bsz_ct 0.53
+-------------
+Matricea A are Rho: 0
+101.836
+pasi jacobi_parallel: 116
+timp jacobi_parallel: 21.497s
+-------------
+101.825
+pasi gauss_seidel_analytic: 76
+timp gauss_seidel_analytic: 24.3601s
+-------------
+Connection reset by 141.85.241.99 port 22
+
+C:\Users\Mi Notebook Pro>ssh vlad_adrian.ulmeanu@fep.grid.pub.ro
+
+* IMPORTANT - PLEASE READ CAREFULLY:
+* Incepand cu 22.09.2019 toate directoarele studentilor vor fi sterse. Va rugam sa va salvati fisierele relevante pana atunci.
+* If you are using GPU computing and TensorFlow technology, please use CUDA_VISIBLE_DEVICES
+  to limit the number of GPUs. Otherwise, you will be banned.
+* Your sessions will be disconnected automatically after 60min on inactivity.
+  You can use "-o ServerAliveInterval 10" option if you need longer sessions.*
+vlad_adrian.ulmeanu@fep.grid.pub.ro's password:
+Last login: Thu Apr 29 08:04:38 2021 from 192.168.6.10
+[vlad_adrian.ulmeanu@fep7-1 ~]$ ./main
+-bash: ./main: No such file or directory
+[vlad_adrian.ulmeanu@fep7-1 ~]$ cd hibrid-jacobi-gauss-seidel/
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$ ./main
+5000 100
+Test number 1, bsz_ct 36.3553
+-------------
+Matricea A are Rho: 0
+332.209
+pasi jacobi_parallel: 135
+timp jacobi_parallel: 26.7057s
+-------------
+332.126
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 28.6159s
+-------------
+332.209
+pasi hibrid: 45
+timp hibrid: 8.44137s
+-------------
+Test number 2, bsz_ct 0.54
+-------------
+Matricea A are Rho: 0
+239.439
+pasi jacobi_parallel: 131
+timp jacobi_parallel: 21.5413s
+-------------
+239.398
+pasi gauss_seidel_analytic: 84
+timp gauss_seidel_analytic: 29.3179s
+-------------
+239.439
+pasi hibrid: 84
+timp hibrid: 24.4537s
+-------------
+Test number 3, bsz_ct 0.7
+-------------
+Matricea A are Rho: 0
+65.3704
+pasi jacobi_parallel: 121
+timp jacobi_parallel: 22.338s
+-------------
+65.3539
+pasi gauss_seidel_analytic: 77
+timp gauss_seidel_analytic: 24.2944s
+-------------
+65.369
+pasi hibrid: 7966
+timp hibrid: 2246.39s
+-------------
+Test number 4, bsz_ct 1
+-------------
+Matricea A are Rho: 0
+246.425
+pasi jacobi_parallel: 116
+timp jacobi_parallel: 31.4979s
+-------------
+246.401
+pasi gauss_seidel_analytic: 79
+timp gauss_seidel_analytic: 28.3478s
+-------------
+246.426
+pasi hibrid: 79
+timp hibrid: 15.487s
+-------------
+Test number 5, bsz_ct 0.64
+-------------
+Matricea A are Rho: 0
+8.1767
+pasi jacobi_parallel: 89
+timp jacobi_parallel: 16.1233s
+-------------
+8.17543
+pasi gauss_seidel_analytic: 61
+timp gauss_seidel_analytic: 21.5117s

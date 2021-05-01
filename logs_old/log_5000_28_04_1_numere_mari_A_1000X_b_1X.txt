@@ -1,0 +1,32 @@
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$ ./main
+5000 100
+Test number 1, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+0.166471
+pasi jacobi_parallel: 68
+timp jacobi_parallel: 35.5653s
+-------------
+0.166446
+pasi gauss_seidel_analytic: 45
+timp gauss_seidel_analytic: 43.9956s
+-------------
+0.166475
+pasi hibrid: 28
+timp hibrid: 14.908s
+-------------
+Test number 2, bsz_ct 64
+-------------
+Matricea A are Rho: 0
+0.121093
+pasi jacobi_parallel: 67
+timp jacobi_parallel: 33.9964s
+-------------
+0.121058
+pasi gauss_seidel_analytic: 45
+timp gauss_seidel_analytic: 48.6353s
+-------------
+0.121088
+pasi hibrid: 43
+timp hibrid: 25.7038s
+-------------
