@@ -1,0 +1,1501 @@
+(variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+220.598
+pasi jacobi_parallel: 131
+timp jacobi_parallel: 24.807s
+-------------
+220.598
+pasi gauss_seidel_analytic: 81
+timp gauss_seidel_analytic: 29.9646s
+-------------
+220.598
+pasi hibrid: 74
+timp hibrid: 14.8408s
+-------------
+Test number 2, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+269.123
+pasi jacobi_parallel: 126
+timp jacobi_parallel: 24.1552s
+-------------
+269.123
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 32.5743s
+-------------
+269.123
+pasi hibrid: 81
+timp hibrid: 29.7635s
+-------------
+Test number 3, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+113.779
+pasi jacobi_parallel: 136
+timp jacobi_parallel: 37.0204s
+-------------
+113.779
+pasi gauss_seidel_analytic: 84
+timp gauss_seidel_analytic: 29.3564s
+-------------
+113.779
+pasi hibrid: 61
+timp hibrid: 12.0726s
+-------------
+Test number 4, bsz_ct 31
+-------------
+Matricea A are Rho: 0
+104.313
+pasi jacobi_parallel: 115
+timp jacobi_parallel: 23.6643s
+-------------
+104.313
+pasi gauss_seidel_analytic: 76
+timp gauss_seidel_analytic: 31.8279s
+-------------
+104.313
+pasi hibrid: 70
+timp hibrid: 31.1206s
+-------------
+Test number 5, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+97.8977
+pasi jacobi_parallel: 119
+timp jacobi_parallel: 27.7306s
+-------------
+97.8977
+pasi gauss_seidel_analytic: 78
+timp gauss_seidel_analytic: 27.1744s
+-------------
+97.8977
+pasi hibrid: 45
+timp hibrid: 10.5189s
+-------------
+Test number 6, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+201.644
+pasi jacobi_parallel: 151
+timp jacobi_parallel: 31.6476s
+-------------
+201.644
+pasi gauss_seidel_analytic: 90
+timp gauss_seidel_analytic: 32.1399s
+-------------
+201.644
+pasi hibrid: 51
+timp hibrid: 10.1338s
+-------------
+Test number 7, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+263.828
+pasi jacobi_parallel: 112
+timp jacobi_parallel: 24.4728s
+-------------
+263.828
+pasi gauss_seidel_analytic: 76
+timp gauss_seidel_analytic: 36.331s
+-------------
+263.828
+pasi hibrid: 68
+timp hibrid: 29.2495s
+-------------
+Test number 8, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+116.582
+pasi jacobi_parallel: 114
+timp jacobi_parallel: 43.5461s
+-------------
+116.582
+pasi gauss_seidel_analytic: 75
+timp gauss_seidel_analytic: 43.1958s
+-------------
+116.582
+pasi hibrid: 68
+timp hibrid: 18.0516s
+-------------
+Test number 9, bsz_ct 23
+-------------
+Matricea A are Rho: 0
+185.864
+pasi jacobi_parallel: 149
+timp jacobi_parallel: 47.5802s
+-------------
+185.864
+pasi gauss_seidel_analytic: 89
+timp gauss_seidel_analytic: 37.1721s
+-------------
+185.864
+pasi hibrid: 89
+timp hibrid: 23.518s
+-------------
+Test number 10, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+315.038
+pasi jacobi_parallel: 144
+timp jacobi_parallel: 46.4176s
+-------------
+315.038
+pasi gauss_seidel_analytic: 89
+timp gauss_seidel_analytic: 43.4932s
+-------------
+315.038
+pasi hibrid: 79
+timp hibrid: 24.7194s
+-------------
+Test number 11, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+253.645
+pasi jacobi_parallel: 133
+timp jacobi_parallel: 44.0124s
+-------------
+253.645
+pasi gauss_seidel_analytic: 84
+timp gauss_seidel_analytic: 36.5696s
+-------------
+253.645
+pasi hibrid: 82
+timp hibrid: 19.6406s
+-------------
+Test number 12, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+207.386
+pasi jacobi_parallel: 125
+timp jacobi_parallel: 33.9293s
+-------------
+207.386
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 32.5842s
+-------------
+207.386
+pasi hibrid: 78
+timp hibrid: 14.9338s
+-------------
+Test number 13, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+213.363
+pasi jacobi_parallel: 132
+timp jacobi_parallel: 29.9592s
+-------------
+213.363
+pasi gauss_seidel_analytic: 84
+timp gauss_seidel_analytic: 34.9144s
+-------------
+213.363
+pasi hibrid: 82
+timp hibrid: 34.7321s
+-------------
+Test number 14, bsz_ct 23
+-------------
+Matricea A are Rho: 0
+83.5659
+pasi jacobi_parallel: 132
+timp jacobi_parallel: 42.4086s
+-------------
+83.5659
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 38.9595s
+-------------
+83.5659
+pasi hibrid: 82
+timp hibrid: 28.7155s
+-------------
+Test number 15, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+222.665
+pasi jacobi_parallel: 123
+timp jacobi_parallel: 27.1759s
+-------------
+222.665
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 28.4825s
+-------------
+222.665
+pasi hibrid: 49
+timp hibrid: 9.80689s
+-------------
+Test number 16, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+74.6971
+pasi jacobi_parallel: 139
+timp jacobi_parallel: 28.7234s
+-------------
+74.6971
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 29.3134s
+-------------
+74.6971
+pasi hibrid: 83
+timp hibrid: 17.7337s
+-------------
+Test number 17, bsz_ct 23
+-------------
+Matricea A are Rho: 0
+89.1327
+pasi jacobi_parallel: 121
+timp jacobi_parallel: 33.7776s
+-------------
+89.1327
+pasi gauss_seidel_analytic: 78
+timp gauss_seidel_analytic: 26.0452s
+-------------
+89.1327
+pasi hibrid: 78
+timp hibrid: 14.4921s
+-------------
+Test number 18, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+132.666
+pasi jacobi_parallel: 122
+timp jacobi_parallel: 21.9794s
+-------------
+132.666
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 28.1056s
+-------------
+132.666
+pasi hibrid: 42
+timp hibrid: 7.95268s
+-------------
+Test number 19, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+156.2
+pasi jacobi_parallel: 136
+timp jacobi_parallel: 26.1291s
+-------------
+156.2
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 28.3528s
+-------------
+156.2
+pasi hibrid: 40
+timp hibrid: 8.28397s
+-------------
+Test number 20, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+182.924
+pasi jacobi_parallel: 119
+timp jacobi_parallel: 28.3077s
+-------------
+182.924
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 27.5199s
+-------------
+182.924
+pasi hibrid: 77
+timp hibrid: 27.2442s
+-------------
+Test number 21, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+68.1844
+pasi jacobi_parallel: 109
+timp jacobi_parallel: 22.4222s
+-------------
+68.1843
+pasi gauss_seidel_analytic: 72
+timp gauss_seidel_analytic: 23.7469s
+-------------
+68.1843
+pasi hibrid: 43
+timp hibrid: 9.20099s
+-------------
+Test number 22, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+211.942
+pasi jacobi_parallel: 122
+timp jacobi_parallel: 24.0099s
+-------------
+211.942
+pasi gauss_seidel_analytic: 81
+timp gauss_seidel_analytic: 28.381s
+-------------
+211.942
+pasi hibrid: 51
+timp hibrid: 9.7847s
+-------------
+Test number 23, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+6.96354
+pasi jacobi_parallel: 94
+timp jacobi_parallel: 17.8068s
+-------------
+6.96354
+pasi gauss_seidel_analytic: 64
+timp gauss_seidel_analytic: 21.1179s
+-------------
+6.96354
+pasi hibrid: 35
+timp hibrid: 8.26904s
+-------------
+Test number 24, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+231.076
+pasi jacobi_parallel: 121
+timp jacobi_parallel: 24.4167s
+-------------
+231.076
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 31.5585s
+-------------
+231.076
+pasi hibrid: 78
+timp hibrid: 17.2788s
+-------------
+Test number 25, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+281.456
+pasi jacobi_parallel: 120
+timp jacobi_parallel: 28.9462s
+-------------
+281.456
+pasi gauss_seidel_analytic: 79
+timp gauss_seidel_analytic: 31.0576s
+-------------
+281.456
+pasi hibrid: 69
+timp hibrid: 15.6368s
+-------------
+Test number 26, bsz_ct 26
+-------------
+Matricea A are Rho: 0
+226.203
+pasi jacobi_parallel: 121
+timp jacobi_parallel: 23.5679s
+-------------
+226.203
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 28.1345s
+-------------
+226.203
+pasi hibrid: 64
+timp hibrid: 14.7787s
+-------------
+Test number 27, bsz_ct 35
+-------------
+Matricea A are Rho: 0
+91.2551
+pasi jacobi_parallel: 135
+timp jacobi_parallel: 29.6468s
+-------------
+91.2551
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 33.3996s
+-------------
+91.2551
+pasi hibrid: 83
+timp hibrid: 16.8835s
+-------------
+Test number 28, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+204.378
+pasi jacobi_parallel: 132
+timp jacobi_parallel: 22.9787s
+-------------
+204.378
+pasi gauss_seidel_analytic: 84
+timp gauss_seidel_analytic: 27.5481s
+-------------
+204.378
+pasi hibrid: 45
+timp hibrid: 10.4916s
+-------------
+Test number 29, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+38.0421
+pasi jacobi_parallel: 125
+timp jacobi_parallel: 30.1435s
+-------------
+38.0421
+pasi gauss_seidel_analytic: 76
+timp gauss_seidel_analytic: 27.6575s
+-------------
+38.0421
+pasi hibrid: 37
+timp hibrid: 7.02603s
+-------------
+Test number 30, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+140.984
+pasi jacobi_parallel: 135
+timp jacobi_parallel: 24.4782s
+-------------
+140.984
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 33.5491s
+-------------
+140.984
+pasi hibrid: 76
+timp hibrid: 41.4622s
+-------------
+Test number 31, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+28.2128
+pasi jacobi_parallel: 114
+timp jacobi_parallel: 27.4488s
+-------------
+28.2128
+pasi gauss_seidel_analytic: 73
+timp gauss_seidel_analytic: 27.5581s
+-------------
+28.2128
+pasi hibrid: 37
+timp hibrid: 8.4919s
+-------------
+Test number 32, bsz_ct 34
+-------------
+Matricea A are Rho: 0
+372.628
+pasi jacobi_parallel: 138
+timp jacobi_parallel: 35.0517s
+-------------
+372.628
+pasi gauss_seidel_analytic: 88
+timp gauss_seidel_analytic: 31.5447s
+-------------
+372.628
+pasi hibrid: 87
+timp hibrid: 20.074s
+-------------
+Test number 33, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+36.2017
+pasi jacobi_parallel: 117
+timp jacobi_parallel: 31.0558s
+-------------
+36.2017
+pasi gauss_seidel_analytic: 75
+timp gauss_seidel_analytic: 28.4319s
+-------------
+36.2017
+pasi hibrid: 68
+timp hibrid: 15.7852s
+-------------
+Test number 34, bsz_ct 35
+-------------
+Matricea A are Rho: 0
+159.729
+pasi jacobi_parallel: 109
+timp jacobi_parallel: 20.0372s
+-------------
+159.729
+pasi gauss_seidel_analytic: 73
+timp gauss_seidel_analytic: 23.7416s
+-------------
+159.729
+pasi hibrid: 73
+timp hibrid: 13.3522s
+-------------
+Test number 35, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+64.4999
+pasi jacobi_parallel: 138
+timp jacobi_parallel: 25.485s
+-------------
+64.4999
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 31.3504s
+-------------
+64.4999
+pasi hibrid: 74
+timp hibrid: 21.3539s
+-------------
+Test number 36, bsz_ct 27
+-------------
+Matricea A are Rho: 0
+209.523
+pasi jacobi_parallel: 131
+timp jacobi_parallel: 30.9733s
+-------------
+209.523
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 27.9859s
+-------------
+209.523
+pasi hibrid: 68
+timp hibrid: 15.4894s
+-------------
+Test number 37, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+177.909
+pasi jacobi_parallel: 132
+timp jacobi_parallel: 30.3138s
+-------------
+177.909
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 35.0752s
+-------------
+177.909
+pasi hibrid: 50
+timp hibrid: 22.4595s
+-------------
+Test number 38, bsz_ct 34
+-------------
+Matricea A are Rho: 0
+218.708
+pasi jacobi_parallel: 136
+timp jacobi_parallel: 39.3667s
+-------------
+218.708
+pasi gauss_seidel_analytic: 86
+timp gauss_seidel_analytic: 42.9274s
+-------------
+218.708
+pasi hibrid: 85
+timp hibrid: 45.7869s
+-------------
+Test number 39, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+149.317
+pasi jacobi_parallel: 120
+timp jacobi_parallel: 38.6461s
+-------------
+149.317
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 29.5809s
+-------------
+149.317
+pasi hibrid: 45
+timp hibrid: 11.9539s
+-------------
+Test number 40, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+57.3408
+pasi jacobi_parallel: 130
+timp jacobi_parallel: 33.3288s
+-------------
+57.3408
+pasi gauss_seidel_analytic: 81
+timp gauss_seidel_analytic: 32.2083s
+-------------
+57.3408
+pasi hibrid: 71
+timp hibrid: 18.5624s
+-------------
+Test number 41, bsz_ct 31
+-------------
+Matricea A are Rho: 0
+104.623
+pasi jacobi_parallel: 116
+timp jacobi_parallel: 30.3043s
+-------------
+104.623
+pasi gauss_seidel_analytic: 76
+timp gauss_seidel_analytic: 29.3694s
+-------------
+104.623
+pasi hibrid: 70
+timp hibrid: 20.0403s
+-------------
+Test number 42, bsz_ct 34
+-------------
+Matricea A are Rho: 0
+216.586
+pasi jacobi_parallel: 154
+timp jacobi_parallel: 43.7086s
+-------------
+216.586
+pasi gauss_seidel_analytic: 91
+timp gauss_seidel_analytic: 35.6134s
+-------------
+216.586
+pasi hibrid: 90
+timp hibrid: 26.3181s
+-------------
+Test number 43, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+124.762
+pasi jacobi_parallel: 131
+timp jacobi_parallel: 34.504s
+-------------
+124.762
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 33.6824s
+-------------
+124.762
+pasi hibrid: 73
+timp hibrid: 16.6856s
+-------------
+Test number 44, bsz_ct 34
+-------------
+Matricea A are Rho: 0
+188.257
+pasi jacobi_parallel: 134
+timp jacobi_parallel: 26.8036s
+-------------
+188.257
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 30.0793s
+-------------
+188.257
+pasi hibrid: 84
+timp hibrid: 17.4448s
+-------------
+Test number 45, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+30.2636
+pasi jacobi_parallel: 118
+timp jacobi_parallel: 20.0862s
+-------------
+30.2636
+pasi gauss_seidel_analytic: 73
+timp gauss_seidel_analytic: 24.861s
+-------------
+30.2636
+pasi hibrid: 54
+timp hibrid: 10.505s
+-------------
+Test number 46, bsz_ct 32
+-------------
+Matricea A are Rho: 0
+328.506
+pasi jacobi_parallel: 141
+timp jacobi_parallel: 29.4508s
+-------------
+328.506
+pasi gauss_seidel_analytic: 89
+timp gauss_seidel_analytic: 32.4399s
+-------------
+328.506
+pasi hibrid: 84
+timp hibrid: 20.7237s
+-------------
+Test number 47, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+192.6
+pasi jacobi_parallel: 143
+timp jacobi_parallel: 40.9278s
+-------------
+192.6
+pasi gauss_seidel_analytic: 88
+timp gauss_seidel_analytic: 31.5813s
+-------------
+192.6
+pasi hibrid: 86
+timp hibrid: 14.9232s
+-------------
+Test number 48, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+313.107
+pasi jacobi_parallel: 126
+timp jacobi_parallel: 24.4225s
+-------------
+313.107
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 36.4908s
+-------------
+313.107
+pasi hibrid: 72
+timp hibrid: 23.8185s
+-------------
+Test number 49, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+12.9881
+pasi jacobi_parallel: 99
+timp jacobi_parallel: 31.8422s
+-------------
+12.9881
+pasi gauss_seidel_analytic: 66
+timp gauss_seidel_analytic: 25.7579s
+-------------
+12.9881
+pasi hibrid: 65
+timp hibrid: 15.1094s
+-------------
+Test number 50, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+119.779
+pasi jacobi_parallel: 128
+timp jacobi_parallel: 31.1552s
+-------------
+119.779
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 29.3695s
+-------------
+119.779
+pasi hibrid: 42
+timp hibrid: 8.72943s
+-------------
+Test number 51, bsz_ct 39
+-------------
+Matricea A are Rho: 0
+107.671
+pasi jacobi_parallel: 129
+timp jacobi_parallel: 23.9562s
+-------------
+107.671
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 28.24s
+-------------
+107.671
+pasi hibrid: 46
+timp hibrid: 11.6653s
+-------------
+Test number 52, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+331.863
+pasi jacobi_parallel: 131
+timp jacobi_parallel: 32.2285s
+-------------
+331.863
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 30.7901s
+-------------
+331.863
+pasi hibrid: 46
+timp hibrid: 10.6973s
+-------------
+Test number 53, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+197.581
+pasi jacobi_parallel: 122
+timp jacobi_parallel: 22.5621s
+-------------
+197.581
+pasi gauss_seidel_analytic: 81
+timp gauss_seidel_analytic: 28.563s
+-------------
+197.581
+pasi hibrid: 71
+timp hibrid: 13.0884s
+-------------
+Test number 54, bsz_ct 26
+-------------
+Matricea A are Rho: 0
+136.312
+pasi jacobi_parallel: 124
+timp jacobi_parallel: 22.5081s
+-------------
+136.312
+pasi gauss_seidel_analytic: 78
+timp gauss_seidel_analytic: 27.7456s
+-------------
+136.312
+pasi hibrid: 62
+timp hibrid: 12.3227s
+-------------
+Test number 55, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+80.8344
+pasi jacobi_parallel: 141
+timp jacobi_parallel: 27.6225s
+-------------
+80.8344
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 29.3388s
+-------------
+80.8344
+pasi hibrid: 70
+timp hibrid: 14.6241s
+-------------
+Test number 56, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+147.579
+pasi jacobi_parallel: 133
+timp jacobi_parallel: 31.1056s
+-------------
+147.579
+pasi gauss_seidel_analytic: 84
+timp gauss_seidel_analytic: 30.8485s
+-------------
+147.579
+pasi hibrid: 63
+timp hibrid: 12.4338s
+-------------
+Test number 57, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+32.072
+pasi jacobi_parallel: 121
+timp jacobi_parallel: 22.4141s
+-------------
+32.072
+pasi gauss_seidel_analytic: 78
+timp gauss_seidel_analytic: 28.2887s
+-------------
+32.072
+pasi hibrid: 38
+timp hibrid: 9.76967s
+-------------
+Test number 58, bsz_ct 34
+-------------
+Matricea A are Rho: 0
+145.334
+pasi jacobi_parallel: 112
+timp jacobi_parallel: 20.9432s
+-------------
+145.334
+pasi gauss_seidel_analytic: 75
+timp gauss_seidel_analytic: 26.7924s
+-------------
+145.334
+pasi hibrid: 74
+timp hibrid: 12.9487s
+-------------
+Test number 59, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+209.606
+pasi jacobi_parallel: 124
+timp jacobi_parallel: 21.8343s
+-------------
+209.606
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 27.6397s
+-------------
+209.606
+pasi hibrid: 69
+timp hibrid: 12.1865s
+-------------
+Test number 60, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+316.067
+pasi jacobi_parallel: 126
+timp jacobi_parallel: 24.8293s
+-------------
+316.067
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 28.5307s
+-------------
+316.067
+pasi hibrid: 70
+timp hibrid: 16.0147s
+-------------
+Test number 61, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+263.814
+pasi jacobi_parallel: 130
+timp jacobi_parallel: 25.4542s
+-------------
+263.814
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 29.5878s
+-------------
+263.814
+pasi hibrid: 69
+timp hibrid: 12.556s
+-------------
+Test number 62, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+232.624
+pasi jacobi_parallel: 132
+timp jacobi_parallel: 24.1013s
+-------------
+232.624
+pasi gauss_seidel_analytic: 84
+timp gauss_seidel_analytic: 28.5193s
+-------------
+232.624
+pasi hibrid: 61
+timp hibrid: 11.3942s
+-------------
+Test number 63, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+22.5181
+pasi jacobi_parallel: 109
+timp jacobi_parallel: 18.8951s
+-------------
+22.5181
+pasi gauss_seidel_analytic: 71
+timp gauss_seidel_analytic: 23.8612s
+-------------
+22.5181
+pasi hibrid: 54
+timp hibrid: 9.84626s
+-------------
+Test number 64, bsz_ct 27
+-------------
+Matricea A are Rho: 0
+226.438
+pasi jacobi_parallel: 129
+timp jacobi_parallel: 23.0891s
+-------------
+226.438
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 27.0548s
+-------------
+226.438
+pasi hibrid: 68
+timp hibrid: 11.4359s
+-------------
+Test number 65, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+298.284
+pasi jacobi_parallel: 127
+timp jacobi_parallel: 21.0351s
+-------------
+298.284
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 27.483s
+-------------
+298.284
+pasi hibrid: 74
+timp hibrid: 13.302s
+-------------
+Test number 66, bsz_ct 31
+-------------
+Matricea A are Rho: 0
+60.7911
+pasi jacobi_parallel: 131
+timp jacobi_parallel: 22.0499s
+-------------
+60.7911
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 25.8857s
+-------------
+60.7911
+pasi hibrid: 76
+timp hibrid: 14.0945s
+-------------
+Test number 67, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+310.326
+pasi jacobi_parallel: 138
+timp jacobi_parallel: 23.1137s
+-------------
+310.326
+pasi gauss_seidel_analytic: 88
+timp gauss_seidel_analytic: 27.4515s
+-------------
+310.326
+pasi hibrid: 78
+timp hibrid: 15.5543s
+-------------
+Test number 68, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+202.575
+pasi jacobi_parallel: 140
+timp jacobi_parallel: 24.3841s
+-------------
+202.575
+pasi gauss_seidel_analytic: 87
+timp gauss_seidel_analytic: 27.5423s
+-------------
+202.575
+pasi hibrid: 64
+timp hibrid: 11.1866s
+-------------
+Test number 69, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+169.614
+pasi jacobi_parallel: 153
+timp jacobi_parallel: 26.1421s
+-------------
+169.614
+pasi gauss_seidel_analytic: 92
+timp gauss_seidel_analytic: 28.9256s
+-------------
+169.614
+pasi hibrid: 46
+timp hibrid: 8.13046s
+-------------
+Test number 70, bsz_ct 35
+-------------
+Matricea A are Rho: 0
+347.489
+pasi jacobi_parallel: 136
+timp jacobi_parallel: 26.9775s
+-------------
+347.489
+pasi gauss_seidel_analytic: 87
+timp gauss_seidel_analytic: 30.2896s
+-------------
+347.489
+pasi hibrid: 87
+timp hibrid: 15.5481s
+-------------
+Test number 71, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+43.4714
+pasi jacobi_parallel: 122
+timp jacobi_parallel: 22.0177s
+-------------
+43.4714
+pasi gauss_seidel_analytic: 77
+timp gauss_seidel_analytic: 24.7059s
+-------------
+43.4714
+pasi hibrid: 75
+timp hibrid: 15.0559s
+-------------
+Test number 72, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+247.594
+pasi jacobi_parallel: 143
+timp jacobi_parallel: 26.8236s
+-------------
+247.594
+pasi gauss_seidel_analytic: 86
+timp gauss_seidel_analytic: 28.6165s
+-------------
+247.594
+pasi hibrid: 76
+timp hibrid: 13.9369s
+-------------
+Test number 73, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+87.0487
+pasi jacobi_parallel: 127
+timp jacobi_parallel: 24.9995s
+-------------
+87.0487
+pasi gauss_seidel_analytic: 79
+timp gauss_seidel_analytic: 27.0786s
+-------------
+87.0487
+pasi hibrid: 77
+timp hibrid: 14.5372s
+-------------
+Test number 74, bsz_ct 27
+-------------
+Matricea A are Rho: 0
+44.6952
+pasi jacobi_parallel: 108
+timp jacobi_parallel: 27.3492s
+-------------
+44.6952
+pasi gauss_seidel_analytic: 71
+timp gauss_seidel_analytic: 24.9221s
+-------------
+44.6952
+pasi hibrid: 59
+timp hibrid: 11.9485s
+-------------
+Test number 75, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+308.586
+pasi jacobi_parallel: 127
+timp jacobi_parallel: 27.5067s
+-------------
+308.586
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 34.3721s
+-------------
+308.586
+pasi hibrid: 60
+timp hibrid: 15.4353s
+-------------
+Test number 76, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+125.023
+pasi jacobi_parallel: 124
+timp jacobi_parallel: 31.9032s
+-------------
+125.023
+pasi gauss_seidel_analytic: 81
+timp gauss_seidel_analytic: 30.7593s
+-------------
+125.023
+pasi hibrid: 79
+timp hibrid: 19.6676s
+-------------
+Test number 77, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+132.588
+pasi jacobi_parallel: 123
+timp jacobi_parallel: 31.1172s
+-------------
+132.588
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 27.143s
+-------------
+132.588
+pasi hibrid: 71
+timp hibrid: 15.049s
+-------------
+Test number 78, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+252.099
+pasi jacobi_parallel: 120
+timp jacobi_parallel: 28.3974s
+-------------
+252.099
+pasi gauss_seidel_analytic: 79
+timp gauss_seidel_analytic: 34.5802s
+-------------
+252.099
+pasi hibrid: 44
+timp hibrid: 15.5046s
+-------------
+Test number 79, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+238.355
+pasi jacobi_parallel: 123
+timp jacobi_parallel: 42.1178s
+-------------
+238.355
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 34.6558s
+-------------
+238.355
+pasi hibrid: 45
+timp hibrid: 12.2147s
+-------------
+Test number 80, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+280.477
+pasi jacobi_parallel: 130
+timp jacobi_parallel: 35.0618s
+-------------
+280.477
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 31.2266s
+-------------
+280.477
+pasi hibrid: 73
+timp hibrid: 16.652s
+-------------
+Test number 81, bsz_ct 26
+-------------
+Matricea A are Rho: 0
+93.5981
+pasi jacobi_parallel: 118
+timp jacobi_parallel: 25.9595s
+-------------
+93.5981
+pasi gauss_seidel_analytic: 77
+timp gauss_seidel_analytic: 33.1926s
+-------------
+93.5981
+pasi hibrid: 62
+timp hibrid: 18.4334s
+-------------
+Test number 82, bsz_ct 26
+-------------
+Matricea A are Rho: 0
+245.963
+pasi jacobi_parallel: 124
+timp jacobi_parallel: 22.9974s
+-------------
+245.963
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 26.7542s
+-------------
+245.963
+pasi hibrid: 64
+timp hibrid: 17.5277s
+-------------
+Test number 83, bsz_ct 39
+-------------
+Matricea A are Rho: 0
+278.358
+pasi jacobi_parallel: 126
+timp jacobi_parallel: 27.0457s
+-------------
+278.358
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 28.3187s
+-------------
+278.358
+pasi hibrid: 49
+timp hibrid: 11.9607s
+-------------
+Test number 84, bsz_ct 32
+-------------
+Matricea A are Rho: 0
+23.761
+pasi jacobi_parallel: 105
+timp jacobi_parallel: 21.0021s
+-------------
+23.7609
+pasi gauss_seidel_analytic: 70
+timp gauss_seidel_analytic: 23.6915s
+-------------
+23.7609
+pasi hibrid: 66
+timp hibrid: 17.2571s
+-------------
+Test number 85, bsz_ct 39
+-------------
+Matricea A are Rho: 0
+187.531
+pasi jacobi_parallel: 140
+timp jacobi_parallel: 34.157s
+-------------
+187.531
+pasi gauss_seidel_analytic: 87
+timp gauss_seidel_analytic: 36.3845s
+-------------
+187.531
+pasi hibrid: 50
+timp hibrid: 11.1423s
+-------------
+Test number 86, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+123.738
+pasi jacobi_parallel: 112
+timp jacobi_parallel: 21.7593s
+-------------
+123.738
+pasi gauss_seidel_analytic: 73
+timp gauss_seidel_analytic: 25.3915s
+-------------
+123.738
+pasi hibrid: 72
+timp hibrid: 13.598s
+-------------
+Test number 87, bsz_ct 35
+-------------
+Matricea A are Rho: 0
+285.927
+pasi jacobi_parallel: 122
+timp jacobi_parallel: 24.8324s
+-------------
+285.927
+pasi gauss_seidel_analytic: 79
+timp gauss_seidel_analytic: 25.5707s
+-------------
+285.927
+pasi hibrid: 79
+timp hibrid: 18.7133s
+-------------
+Test number 88, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+21.7004
+pasi jacobi_parallel: 112
+timp jacobi_parallel: 24.1198s
+-------------
+21.7004
+pasi gauss_seidel_analytic: 72
+timp gauss_seidel_analytic: 26.2789s
+-------------
+21.7004
+pasi hibrid: 39
+timp hibrid: 8.25924s
+-------------
+Test number 89, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+47.9758
+pasi jacobi_parallel: 115
+timp jacobi_parallel: 34.5664s
+-------------
+47.9758
+pasi gauss_seidel_analytic: 76
+timp gauss_seidel_analytic: 25.4812s
+-------------
+47.9758
+pasi hibrid: 63
+timp hibrid: 11.9625s
+-------------
+Test number 90, bsz_ct 32
+-------------
+Matricea A are Rho: 0
+285.876
+pasi jacobi_parallel: 136
+timp jacobi_parallel: 23.3167s
+-------------
+285.876
+pasi gauss_seidel_analytic: 86
+timp gauss_seidel_analytic: 28.1686s
+-------------
+285.876
+pasi hibrid: 82
+timp hibrid: 15.2792s
+-------------
+Test number 91, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+193.616
+pasi jacobi_parallel: 128
+timp jacobi_parallel: 23.0091s
+-------------
+193.616
+pasi gauss_seidel_analytic: 83
+timp gauss_seidel_analytic: 25.8652s
+-------------
+193.616
+pasi hibrid: 45
+timp hibrid: 7.89659s
+-------------
+Test number 92, bsz_ct 27
+-------------
+Matricea A are Rho: 0
+127.412
+pasi jacobi_parallel: 114
+timp jacobi_parallel: 22.5559s
+-------------
+127.412
+pasi gauss_seidel_analytic: 76
+timp gauss_seidel_analytic: 25.48s
+-------------
+127.412
+pasi hibrid: 62
+timp hibrid: 13.5016s
+-------------
+Test number 93, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+79.8516
+pasi jacobi_parallel: 142
+timp jacobi_parallel: 33.1354s
+-------------
+79.8516
+pasi gauss_seidel_analytic: 85
+timp gauss_seidel_analytic: 31.5225s
+-------------
+79.8516
+pasi hibrid: 60
+timp hibrid: 18.1437s
+-------------
+Test number 94, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+299.581
+pasi jacobi_parallel: 121
+timp jacobi_parallel: 31.0766s
+-------------
+299.581
+pasi gauss_seidel_analytic: 80
+timp gauss_seidel_analytic: 30.4108s
+-------------
+299.581
+pasi hibrid: 45
+timp hibrid: 8.45133s
+-------------
+Test number 95, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+91.4727
+pasi jacobi_parallel: 130
+timp jacobi_parallel: 24.4467s
+-------------
+91.4727
+pasi gauss_seidel_analytic: 81
+timp gauss_seidel_analytic: 27.024s
+-------------
+91.4727
+pasi hibrid: 69
+timp hibrid: 12.5489s
+-------------
+Test number 96, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+108.306
+pasi jacobi_parallel: 127
+timp jacobi_parallel: 25.456s
+-------------
+108.306
+pasi gauss_seidel_analytic: 81
+timp gauss_seidel_analytic: 26.0051s
+-------------
+108.306
+pasi hibrid: 39
+timp hibrid: 7.32653s
+-------------
+Test number 97, bsz_ct 26
+-------------
+Matricea A are Rho: 0
+0.923199
+pasi jacobi_parallel: 90
+timp jacobi_parallel: 15.3945s
+-------------
+0.923205
+pasi gauss_seidel_analytic: 58
+timp gauss_seidel_analytic: 18.9392s
+-------------
+0.923202
+pasi hibrid: 44
+timp hibrid: 7.79542s
+-------------
+Test number 98, bsz_ct 39
+-------------
+Matricea A are Rho: 0
+316.2
+pasi jacobi_parallel: 136
+timp jacobi_parallel: 26.209s
+-------------
+316.2
+pasi gauss_seidel_analytic: 87
+timp gauss_seidel_analytic: 36.8018s
+-------------
+316.2
+pasi hibrid: 51
+timp hibrid: 10.5375s
+-------------
+Test number 99, bsz_ct 27
+-------------
+Matricea A are Rho: 0
+113.154
+pasi jacobi_parallel: 121
+timp jacobi_parallel: 27.3762s
+-------------
+113.154
+pasi gauss_seidel_analytic: 78
+timp gauss_seidel_analytic: 29.367s
+-------------
+113.154
+pasi hibrid: 63
+timp hibrid: 13.3637s
+-------------
+Test number 100, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+121.936
+pasi jacobi_parallel: 154
+timp jacobi_parallel: 30.4939s
+-------------
+121.936
+pasi gauss_seidel_analytic: 91
+timp gauss_seidel_analytic: 30.8144s
+-------------
+121.936
+pasi hibrid: 51
+timp hibrid: 9.86321s
+-------------

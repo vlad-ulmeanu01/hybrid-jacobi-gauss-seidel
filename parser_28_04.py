@@ -1,4 +1,4 @@
-fin = open("loguri_refacute/8 fixed bucketsize coefficient = sqrt(n)2 a_coef 1000 b_coef 1000 diff weight.txt", "r")
+fin = open("loguri_si_mai_refacute/4 variating bucketsize coefficient a_coef 1000 b_coef 1000 diff weight 4 threads concentrated 22 40.txt", "r")
 lines = fin.read().split('\n')
 
 bsz_coef = []

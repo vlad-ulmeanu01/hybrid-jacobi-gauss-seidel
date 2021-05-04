@@ -1,0 +1,98 @@
+NUMBER OF THREADS: 8
+Matrix dimension: 1000
+fixed bucketsize coefficient = 1, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 1
+-------------
+Matricea A are Rho: 0.898143
+timp hholder: 0.220411s
+-------------
+DBG GSe pas nr 0 Rho(A): 0.898143
+1 pasi; err_fata_de_solutie gauss_seidel_entropy: 570.15
+1 pasi; err_fata_de_ult_val gauss_seidel_entropy: 571.285
+DBG GSe pas nr 1 Rho(A): 0.898143
+2 pasi; err_fata_de_solutie gauss_seidel_entropy: 376.819
+2 pasi; err_fata_de_ult_val gauss_seidel_entropy: 570.466
+DBG GSe pas nr 2 Rho(A): 0.898143
+3 pasi; err_fata_de_solutie gauss_seidel_entropy: 37.351
+3 pasi; err_fata_de_ult_val gauss_seidel_entropy: 377.048
+DBG GSe pas nr 3 Rho(A): 0.898143
+4 pasi; err_fata_de_solutie gauss_seidel_entropy: 14.5745
+4 pasi; err_fata_de_ult_val gauss_seidel_entropy: 38.9322
+DBG GSe pas nr 4 Rho(A): 0.898143
+5 pasi; err_fata_de_solutie gauss_seidel_entropy: 131.586
+5 pasi; err_fata_de_ult_val gauss_seidel_entropy: 131.723
+DBG GSe pas nr 5 Rho(A): 0.898143
+6 pasi; err_fata_de_solutie gauss_seidel_entropy: 27.9241
+6 pasi; err_fata_de_ult_val gauss_seidel_entropy: 133.868
+DBG GSe pas nr 6 Rho(A): 0.898143
+7 pasi; err_fata_de_solutie gauss_seidel_entropy: 15.6853
+7 pasi; err_fata_de_ult_val gauss_seidel_entropy: 33.6368
+DBG GSe pas nr 7 Rho(A): 0.898143
+8 pasi; err_fata_de_solutie gauss_seidel_entropy: 21.3325
+8 pasi; err_fata_de_ult_val gauss_seidel_entropy: 22.2627
+DBG GSe pas nr 8 Rho(A): 0.898143
+9 pasi; err_fata_de_solutie gauss_seidel_entropy: 47.2123
+9 pasi; err_fata_de_ult_val gauss_seidel_entropy: 48.4693
+DBG GSe pas nr 9 Rho(A): 0.898143
+10 pasi; err_fata_de_solutie gauss_seidel_entropy: 10.2353
+10 pasi; err_fata_de_ult_val gauss_seidel_entropy: 47.2276
+DBG GSe pas nr 10 Rho(A): 0.898143
+11 pasi; err_fata_de_solutie gauss_seidel_entropy: 1.68438
+11 pasi; err_fata_de_ult_val gauss_seidel_entropy: 10.2363
+DBG GSe pas nr 11 Rho(A): 0.898143
+12 pasi; err_fata_de_solutie gauss_seidel_entropy: 4.39955
+12 pasi; err_fata_de_ult_val gauss_seidel_entropy: 4.35054
+DBG GSe pas nr 12 Rho(A): 0.898143
+13 pasi; err_fata_de_solutie gauss_seidel_entropy: 39.7566
+13 pasi; err_fata_de_ult_val gauss_seidel_entropy: 39.7678
+DBG GSe pas nr 13 Rho(A): 0.898143
+14 pasi; err_fata_de_solutie gauss_seidel_entropy: 5.97449
+14 pasi; err_fata_de_ult_val gauss_seidel_entropy: 39.8501
+DBG GSe pas nr 14 Rho(A): 0.898143
+15 pasi; err_fata_de_solutie gauss_seidel_entropy: 3.99451
+15 pasi; err_fata_de_ult_val gauss_seidel_entropy: 6.04601
+DBG GSe pas nr 15 Rho(A): 0.898143
+16 pasi; err_fata_de_solutie gauss_seidel_entropy: 9.37545
+16 pasi; err_fata_de_ult_val gauss_seidel_entropy: 9.21122
+DBG GSe pas nr 16 Rho(A): 0.898143
+17 pasi; err_fata_de_solutie gauss_seidel_entropy: 3.14586
+17 pasi; err_fata_de_ult_val gauss_seidel_entropy: 9.2976
+DBG GSe pas nr 17 Rho(A): 0.898143
+18 pasi; err_fata_de_solutie gauss_seidel_entropy: 3.13551
+18 pasi; err_fata_de_ult_val gauss_seidel_entropy: 1.61639
+DBG GSe pas nr 18 Rho(A): 0.898143
+19 pasi; err_fata_de_solutie gauss_seidel_entropy: 0.618001
+19 pasi; err_fata_de_ult_val gauss_seidel_entropy: 3.13733
+DBG GSe pas nr 19 Rho(A): 0.898143
+20 pasi; err_fata_de_solutie gauss_seidel_entropy: 39.7715
+20 pasi; err_fata_de_ult_val gauss_seidel_entropy: 39.7739
+DBG GSe pas nr 20 Rho(A): 0.898143
+21 pasi; err_fata_de_solutie gauss_seidel_entropy: 5.92472
+21 pasi; err_fata_de_ult_val gauss_seidel_entropy: 39.7693
+DBG GSe pas nr 21 Rho(A): 0.898143
+22 pasi; err_fata_de_solutie gauss_seidel_entropy: 53.2898
+22 pasi; err_fata_de_ult_val gauss_seidel_entropy: 52.439
+DBG GSe pas nr 22 Rho(A): 0.898143
+23 pasi; err_fata_de_solutie gauss_seidel_entropy: 7.77592
+23 pasi; err_fata_de_ult_val gauss_seidel_entropy: 53.2983
+DBG GSe pas nr 23 Rho(A): 0.898143
+24 pasi; err_fata_de_solutie gauss_seidel_entropy: 1.99729
+24 pasi; err_fata_de_ult_val gauss_seidel_entropy: 7.47013
+DBG GSe pas nr 24 Rho(A): 0.898143
+25 pasi; err_fata_de_solutie gauss_seidel_entropy: 5.54073
+25 pasi; err_fata_de_ult_val gauss_seidel_entropy: 5.79412
+DBG GSe pas nr 25 Rho(A): 0.898143
+26 pasi; err_fata_de_solutie gauss_seidel_entropy: 14.6349
+26 pasi; err_fata_de_ult_val gauss_seidel_entropy: 14.653
+DBG GSe pas nr 26 Rho(A): 0.898143
+27 pasi; err_fata_de_solutie gauss_seidel_entropy: 7.02836
+27 pasi; err_fata_de_ult_val gauss_seidel_entropy: 14.6339
+DBG GSe pas nr 27 Rho(A): 0.898143
+28 pasi; err_fata_de_solutie gauss_seidel_entropy: 8.99681
+28 pasi; err_fata_de_ult_val gauss_seidel_entropy: 9.22717
+DBG GSe pas nr 28 Rho(A): 0.898143
+29 pasi; err_fata_de_solutie gauss_seidel_entropy: 4.74141
+29 pasi; err_fata_de_ult_val gauss_seidel_entropy: 13.7382
+DBG GSe pas nr 29 Rho(A): 0.898143
+30 pasi; err_fata_de_solutie gauss_seidel_entropy: 25.0654
+30 pasi; err_fata_de_ult_val gauss_seidel_entropy: 25.0693
