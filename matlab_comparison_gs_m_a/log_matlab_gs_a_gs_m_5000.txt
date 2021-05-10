@@ -1,0 +1,24 @@
+(A generated with [0, 1000] bounds)
+
+MATLAB, 8 threads, A x 1000, b x 1000, diff weight, N^-1 == inverse_inferior_triangular(N)
+>> test_variants(5000);
+gauss seidel analytic time 20.516272, 81 steps, err 0.000004
+gauss seidel matriceal time 189.012011, 81 steps, err 0.000004
+
+
+MATLAB, 8 threads, A x 1000, b x 1000, diff weight, N^-1 == inv(N)
+>> test_variants(5000);
+gauss seidel analytic time 23.449341, 91 steps, err 0.000004
+gauss seidel matriceal time 4.901237, 91 steps, err 0.000004
+>> test_variants(5000);
+gauss seidel analytic time 17.397542, 69 steps, err 0.000004
+gauss seidel matriceal time 4.658053, 69 steps, err 0.000004
+
+
+MATLAB, 8 threads, A x 1000, b x 1000, diff weight, (N^-1 * P) == N \ P, (N^-1 * b) == N \ b
+>> test_variants(5000);
+gauss seidel analytic time 22.715766, 89 steps, err 0.000005
+gauss seidel matriceal time 1.829083, 89 steps, err 0.000005
+>> test_variants(5000);
+gauss seidel analytic time 17.362057, 68 steps, err 0.000004
+gauss seidel matriceal time 1.538056, 68 steps, err 0.000004
