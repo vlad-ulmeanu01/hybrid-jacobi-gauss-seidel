@@ -8,12 +8,13 @@
 #include <vector>
 #include <cassert>
 #include <thread>
+#include <complex>
 #include <Eigen/Dense>
-
 //#include <omp.h>
 
 #define DEBUG 0
 
+/// g++ -std=c++11 -O3 -fopenmp -march=native -lpthread -I ~/Eigen/ main.cpp -o main
 /// g++ -std=c++17 -O3 -fopenmp -march=native -lpthread -I /usr/local/include/Eigen/ main.cpp -o main
 
 ///Explanation: Gauss-Seidel method is applicable to strictly diagonally dominant or
@@ -526,6 +527,158 @@ solve_jacobi_analytic_parallel (Eigen::MatrixXd A, Eigen::MatrixXd b, double tol
   return std::make_pair(x, pasi);
 }
 
+std::pair<Eigen::MatrixXd, int>
+solve_sor_analytic (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::MatrixXd b, double tol, int max_pasi,
+                    std::string str_print_err,
+										bool should_pass_solution, Eigen::MatrixXd &x_precise)
+{
+  if (A.rows() != A.cols() || A.rows() != b.rows() || b.cols() != 1) {
+    std::cerr << "solve_sor_analytic invalid matrices\n";
+    exit(0);
+  }
+  int n = A.rows();
+  Eigen::MatrixXd N = Eigen::MatrixXd::Zero(n, n);
+  for (int i = 0; i < n; i++)
+    N(i, i) = A(i, i);
+
+  Eigen::MatrixXd G_jacobi = N.inverse() * (N - A);
+//  double Rho_jacobi = spectral_radius(mt, G_jacobi);
+//  double w_part = Rho_jacobi / (1 + sqrt(1 - Rho_jacobi * Rho_jacobi));
+//  double w = 1 + w_part * w_part;
+
+  std::cout << "G_jacobi has " << G_jacobi.eigenvalues().imag().lpNorm<Eigen::Infinity>() << " biggest C-R part\n";
+
+  Eigen::MatrixXd L = Eigen::MatrixXd::Zero(n, n), U = Eigen::MatrixXd::Zero(n, n), D = N;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      if (i < j) {
+        U(i, j) = A(i, j);
+      } else if (i > j){
+        L(i, j) = A(i, j);
+      }
+
+  double w = -1.0, best_Rho = 1.0 * (1<<30);
+  std::uniform_real_distribution<double> distr(0.0, 1.0);
+  for (int z = 0; z < 200; z++) {
+    double now_w = distr(mt);
+    double Rho = spectral_radius(mt, (D + now_w * L).inverse() * ((1 - now_w) * D - now_w * U));
+    if (z == 0 || best_Rho > Rho) {
+      best_Rho = Rho;
+      w = now_w;
+    }
+  }
+
+  str_print_err += std::to_string(w);
+
+  Eigen::MatrixXd x = Eigen::MatrixXd::Zero(n, 1), x0 = x;
+  int pasi = 0;
+  while (pasi == 0 || (pasi < max_pasi && (x - x0).lpNorm<Eigen::Infinity>() > tol)) {
+    x0 = x;
+    for (int i = 0; i < n; i++) {
+      x(i, 0) = b(i, 0);
+      if (0 <= i) ///!!nu i-1..
+        x(i, 0) -= A.row(i).segment(0, i) * x.col(0).segment(0, i);
+      if (0 <= n-1-i)
+        x(i, 0) -= A.row(i).segment(i+1, n-1-i) * x0.col(0).segment(i+1, n-1-i);
+      x(i, 0) /= A(i, i);
+
+      x(i, 0) = x(i, 0) * w + x0(i, 0) * (1 - w);
+    }
+    pasi++;
+    print_error_to_solution(pasi, should_pass_solution, str_print_err, x, x0, x_precise);
+  }
+
+  return std::make_pair(x, pasi);
+}
+
+std::pair<Eigen::MatrixXd, int>
+solve_gauss_seidel_entropy_dp (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::MatrixXd b, double tol,
+                               int max_pasi, bool should_pass_solution, Eigen::MatrixXd &x_precise)
+{
+  if (A.rows() != A.cols() || A.rows() != b.rows() || b.cols() != 1) {
+    std::cerr << "solve_gauss_seidel_entropy_dp invalid matrices\n";
+    exit(0);
+  }
+
+  int n = A.cols();
+  A.conservativeResize(n+1, Eigen::NoChange);
+  for (int i = 0; i < n; i++)
+    A(n, i) = i;
+
+  Eigen::MatrixXd x = Eigen::MatrixXd::Zero(n, 3);
+  for (int i = 0; i < n; i++)
+    x(i, 2) = i;
+
+  bool did_sort_on_last_step = false;
+
+  ///d[i] = cea mai buna stare dupa i pasi.
+  ///o stare contine A, b, x_precise si x asociate. o stare e mai buna decat alta daca "distanta"
+  ///dintre x.col(0) si x.col(1) e mai mica.
+
+  int pasi;
+  for (pasi = 1; pasi <= max_pasi; pasi++) {
+    Eigen::MatrixXd A_cpy = A, b_cpy = b, x_precise_cpy = x_precise, x_cpy = x;
+
+    ///fac trecere cu sortare pe cpy.
+    sort_matrix_lines(x_cpy, []
+        (const Eigen::MatrixXd &a_, const Eigen::MatrixXd &b_) {
+          return fabs(a_(0, 0) - a_(0, 1)) < fabs(b_(0, 0) - b_(0, 1));
+        });
+
+    /// aduc si x_precise_cpy la forma dorita.
+    shift_columns_to_match(A_cpy, b_cpy, x_cpy.col(2).transpose(), should_pass_solution, x_precise_cpy);
+
+    ///acum fac trecere directa si pe normal si pe copie.
+    x.col(1) = x.col(0);
+    x_cpy.col(1) = x_cpy.col(0);
+    for (int i = 0; i < n; i++) {
+      x(i, 0) = b(i, 0);
+      x_cpy(i, 0) = b_cpy(i, 0);
+      if (0 <= i) {
+        x(i, 0) -= A.row(i).segment(0, i) * x.col(0).segment(0, i);
+        x_cpy(i, 0) -= A_cpy.row(i).segment(0, i) * x_cpy.col(0).segment(0, i);
+      }
+      if (0 <= n-1-i) {
+        x(i, 0) -= A.row(i).segment(i+1, n-1-i) * x.col(1).segment(i+1, n-1-i);
+        x_cpy(i, 0) -= A_cpy.row(i).segment(i+1, n-1-i) * x_cpy.col(1).segment(i+1, n-1-i);
+      }
+      x(i, 0) /= A(i, i);
+      x_cpy(i, 0) /= A_cpy(i, i);
+    }
+
+//    if ((x.col(0) - x_precise).lpNorm<Eigen::Infinity>() >
+//        (x_cpy.col(0) - x_precise_cpy).lpNorm<Eigen::Infinity>()) {
+    if ((x.col(0) - x.col(1)).lpNorm<Eigen::Infinity>() <
+        (x_cpy.col(0) - x_cpy.col(1)).lpNorm<Eigen::Infinity>()) {
+      did_sort_on_last_step = true;
+      A = A_cpy;
+      b = b_cpy;
+      x_precise = x_precise_cpy;
+      x = x_cpy;
+    } else {
+      did_sort_on_last_step = false;
+    }
+
+    if (did_sort_on_last_step == false)
+      print_error_to_solution(pasi, should_pass_solution, "gauss_seidel_entropy_dp_0",
+                              x.col(0), x.col(1), x_precise);
+    else
+      print_error_to_solution(pasi, should_pass_solution, "gauss_seidel_entropy_dp_1",
+                              x.col(0), x.col(1), x_precise);
+
+    if ((x.col(0) - x.col(1)).lpNorm<Eigen::Infinity>() <= tol)
+      break;
+  }
+
+  sort_matrix_lines(x, []
+  (const Eigen::MatrixXd &a_, const Eigen::MatrixXd &b_) {
+    return a_(0, 2) < b_(0, 2);
+  });
+  shift_columns_to_match(A, b, x.col(2).transpose(), should_pass_solution, x_precise);
+
+  return std::make_pair(x.col(0), pasi);
+}
+
 void
 one_simulation (std::mt19937 &mt, int n, int nt, double bucketsize_coefficient,
   double coef_a, double coef_b,
@@ -533,6 +686,7 @@ one_simulation (std::mt19937 &mt, int n, int nt, double bucketsize_coefficient,
   bool should_solve_gauss_seidel, bool should_solve_jacobi_analytic_parallel,
   bool should_solve_gauss_seidel_analytic, bool should_hybrid_jacobi_gauss_seidel,
   bool should_solve_gauss_seidel_entropy, bool should_hybrid_entropy_jacobi_gauss_seidel,
+  bool should_solve_sor_analytic, bool should_solve_gauss_seidel_entropy_dp,
   bool should_pass_solution, bool should_differentiate_generated_matrix_weight)
 {
   std::cout << "Test number " << nt << ", bsz_ct " << bucketsize_coefficient << "\n-------------\n";
@@ -679,6 +833,40 @@ one_simulation (std::mt19937 &mt, int n, int nt, double bucketsize_coefficient,
     std::cout << "pasi hibrid entropy: " << pasi_hybrid_entropy << '\n';
     std::cout << "timp hibrid entropy: " << duration_hybrid_entropy.count() / 1000000.0 << "s\n-------------\n";
   }
+
+  if (should_solve_sor_analytic)
+  {
+    start = std::chrono::steady_clock::now();
+
+    auto sor_analytic = solve_sor_analytic(mt, A, b, 0.00001, 300, "solve_sor_analytic_",
+                                           should_pass_solution, x_precise);
+
+    stop = std::chrono::steady_clock::now();
+    auto duration_sor_analytic = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+    Eigen::MatrixXd x_sor_analytic = sor_analytic.first;
+    int pasi_sor_analytic = sor_analytic.second;
+
+    std::cout << (x_sor_analytic - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi sor analytic: " << pasi_sor_analytic << '\n';
+    std::cout << "timp sor analytic: " << duration_sor_analytic.count() / 1000000.0 << "s\n-------------\n";
+  }
+
+  if (should_solve_gauss_seidel_entropy_dp)
+  {
+    start = std::chrono::steady_clock::now();
+    auto gs_entropy_dp = solve_gauss_seidel_entropy_dp(mt, A, b, 0.00001, 100, should_pass_solution, x_precise);
+
+    stop = std::chrono::steady_clock::now();
+    auto duration_gs_entropy_dp = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+    Eigen::MatrixXd x_gs_entropy_dp = gs_entropy_dp.first;
+    int pasi_gs_entropy_dp = gs_entropy_dp.second;
+
+    std::cout << (x_gs_entropy_dp - x_precise).lpNorm<Eigen::Infinity>() << '\n';
+    std::cout << "pasi gauss_seidel_entropy_dp: " << pasi_gs_entropy_dp << '\n';
+    std::cout << "timp gauss_seidel_entropy_dp: " << duration_gs_entropy_dp.count() / 1000000.0 << "s\n-------------\n";
+  }
 }
 
 void
@@ -693,6 +881,8 @@ nonentropy_stresstest (std::mt19937 &mt)
        should_hybrid_jacobi_gauss_seidel = true,
        should_solve_gauss_seidel_entropy = false,
        should_hybrid_entropy_jacobi_gauss_seidel = false,
+       should_solve_sor_analytic = false,
+       should_solve_gauss_seidel_entropy_dp = false,
        should_pass_solution = false;
 
   int n, num_tests[8] = {0};
@@ -728,6 +918,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, false);
 
     std::cout << std::flush;
@@ -740,6 +931,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, false);
 
     std::cout << std::flush;
@@ -752,6 +944,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, true);
 
     std::cout << std::flush;
@@ -764,6 +957,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, true);
 
     std::cout << std::flush;
@@ -778,6 +972,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, false);
 
     std::cout << std::flush;
@@ -790,6 +985,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, false);
 
     std::cout << std::flush;
@@ -802,6 +998,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, true);
 
     std::cout << std::flush;
@@ -814,6 +1011,7 @@ nonentropy_stresstest (std::mt19937 &mt)
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_pass_solution, true);
 
     std::cout << std::flush;
@@ -832,6 +1030,8 @@ entropy_convergencetest (std::mt19937 &mt)
        should_hybrid_jacobi_gauss_seidel = true,
        should_solve_gauss_seidel_entropy = true,
        should_hybrid_entropy_jacobi_gauss_seidel = true,
+       should_solve_sor_analytic = true,
+       should_solve_gauss_seidel_entropy_dp = true,
        should_pass_solution = true,
        should_differentiate_generated_matrix_weight = true;
 
@@ -849,6 +1049,7 @@ entropy_convergencetest (std::mt19937 &mt)
   should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
   should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
   should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+  should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
   should_pass_solution, should_differentiate_generated_matrix_weight);
 }
 
@@ -860,8 +1061,8 @@ main()
   std::mt19937 mt = std::mt19937();
   mt.seed(time(NULL));
 
-  nonentropy_stresstest(mt);
-  //entropy_convergencetest(mt);
+  //nonentropy_stresstest(mt);
+  entropy_convergencetest(mt);
 
   return 0;
 }
