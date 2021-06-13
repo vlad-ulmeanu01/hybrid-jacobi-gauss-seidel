@@ -1,0 +1,1508 @@
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$ ./main
+NUMBER OF THREADS: 4
+Matrix dimension: 2500
+Number of tests (variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight): 100
+
+
+(variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+442.209
+pasi hibrid entropy: 75
+timp hibrid entropy: 14.3371s
+-------------
+442.209
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.7588s
+-------------
+442.209
+pasi hybrid_entropy_dp: 79
+timp hybrid_entropy_dp: 21.0329s
+-------------
+Test number 2, bsz_ct 15
+-------------
+Matricea A are Rho: 0
+31.6783
+pasi hibrid entropy: 55
+timp hibrid entropy: 10.6719s
+-------------
+31.6783
+pasi gauss_seidel_entropy_dp: 14
+timp gauss_seidel_entropy_dp: 4.71249s
+-------------
+31.6783
+pasi hybrid_entropy_dp: 30
+timp hybrid_entropy_dp: 8.07019s
+-------------
+Test number 3, bsz_ct 7
+-------------
+Matricea A are Rho: 0
+78.6412
+pasi hibrid entropy: 51
+timp hibrid entropy: 9.84715s
+-------------
+78.6412
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.08018s
+-------------
+78.6412
+pasi hybrid_entropy_dp: 25
+timp hybrid_entropy_dp: 7.01137s
+-------------
+Test number 4, bsz_ct 16
+-------------
+Matricea A are Rho: 0
+522.115
+pasi hibrid entropy: 61
+timp hibrid entropy: 11.8054s
+-------------
+522.115
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.44704s
+-------------
+522.115
+pasi hybrid_entropy_dp: 34
+timp hybrid_entropy_dp: 9.6408s
+-------------
+Test number 5, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+137.666
+pasi hibrid entropy: 70
+timp hibrid entropy: 13.7119s
+-------------
+137.666
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.01295s
+-------------
+137.666
+pasi hybrid_entropy_dp: 47
+timp hybrid_entropy_dp: 12.6288s
+-------------
+Test number 6, bsz_ct 23
+-------------
+Matricea A are Rho: 0
+443.877
+pasi hibrid entropy: 69
+timp hibrid entropy: 13.1082s
+-------------
+443.877
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 6.03602s
+-------------
+443.877
+pasi hybrid_entropy_dp: 69
+timp hybrid_entropy_dp: 18.6369s
+-------------
+Test number 7, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+722.879
+pasi hibrid entropy: 81
+timp hibrid entropy: 15.7305s
+-------------
+722.879
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.14513s
+-------------
+722.879
+pasi hybrid_entropy_dp: 77
+timp hybrid_entropy_dp: 21.2997s
+-------------
+Test number 8, bsz_ct 12
+-------------
+Matricea A are Rho: 0
+35.7406
+pasi hibrid entropy: 51
+timp hibrid entropy: 9.96738s
+-------------
+35.7406
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.3571s
+-------------
+35.7406
+pasi hybrid_entropy_dp: 51
+timp hybrid_entropy_dp: 13.9397s
+-------------
+Test number 9, bsz_ct 37
+-------------
+Matricea A are Rho: 0
+406.879
+pasi hibrid entropy: 72
+timp hibrid entropy: 14.0165s
+-------------
+406.879
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.67241s
+-------------
+406.879
+pasi hybrid_entropy_dp: 45
+timp hybrid_entropy_dp: 12.2764s
+-------------
+Test number 10, bsz_ct 26
+-------------
+Matricea A are Rho: 0
+559.71
+pasi hibrid entropy: 77
+timp hibrid entropy: 14.9303s
+-------------
+559.71
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.40776s
+-------------
+559.71
+pasi hybrid_entropy_dp: 41
+timp hybrid_entropy_dp: 10.923s
+-------------
+Test number 11, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+605.957
+pasi hibrid entropy: 75
+timp hibrid entropy: 14.5992s
+-------------
+605.957
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.81791s
+-------------
+605.957
+pasi hybrid_entropy_dp: 39
+timp hybrid_entropy_dp: 10.7191s
+-------------
+Test number 12, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+112.677
+pasi hibrid entropy: 69
+timp hibrid entropy: 13.2542s
+-------------
+112.677
+pasi gauss_seidel_entropy_dp: 14
+timp gauss_seidel_entropy_dp: 4.6993s
+-------------
+112.677
+pasi hybrid_entropy_dp: 38
+timp hybrid_entropy_dp: 9.96367s
+-------------
+Test number 13, bsz_ct 34
+-------------
+Matricea A are Rho: 0
+545.259
+pasi hibrid entropy: 78
+timp hibrid entropy: 15.1611s
+-------------
+545.259
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.96833s
+-------------
+545.259
+pasi hybrid_entropy_dp: 63
+timp hybrid_entropy_dp: 16.6245s
+-------------
+Test number 14, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+185.591
+pasi hibrid entropy: 63
+timp hibrid entropy: 12.0422s
+-------------
+185.591
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.40041s
+-------------
+185.591
+pasi hybrid_entropy_dp: 35
+timp hybrid_entropy_dp: 9.3545s
+-------------
+Test number 15, bsz_ct 7
+-------------
+Matricea A are Rho: 0
+176.003
+pasi hibrid entropy: 56
+timp hibrid entropy: 10.7186s
+-------------
+176.003
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.76482s
+-------------
+176.003
+pasi hybrid_entropy_dp: 31
+timp hybrid_entropy_dp: 8.77573s
+-------------
+Test number 16, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+343.41
+pasi hibrid entropy: 67
+timp hibrid entropy: 12.8139s
+-------------
+343.41
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.08566s
+-------------
+343.41
+pasi hybrid_entropy_dp: 29
+timp hybrid_entropy_dp: 8.12137s
+-------------
+Test number 17, bsz_ct 34
+-------------
+Matricea A are Rho: 0
+473.53
+pasi hibrid entropy: 75
+timp hibrid entropy: 14.4191s
+-------------
+473.53
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.10816s
+-------------
+473.53
+pasi hybrid_entropy_dp: 64
+timp hybrid_entropy_dp: 17.2195s
+-------------
+Test number 18, bsz_ct 1
+-------------
+Matricea A are Rho: 0
+8.9269
+pasi hibrid entropy: 39
+timp hibrid entropy: 7.82918s
+-------------
+8.9269
+pasi gauss_seidel_entropy_dp: 13
+timp gauss_seidel_entropy_dp: 4.46184s
+-------------
+8.92689
+pasi hybrid_entropy_dp: 33
+timp hybrid_entropy_dp: 8.93666s
+-------------
+Test number 19, bsz_ct 17
+-------------
+Matricea A are Rho: 0
+229.816
+pasi hibrid entropy: 72
+timp hibrid entropy: 13.9931s
+-------------
+229.816
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.32464s
+-------------
+229.816
+pasi hybrid_entropy_dp: 60
+timp hybrid_entropy_dp: 15.9725s
+-------------
+Test number 20, bsz_ct 8
+-------------
+Matricea A are Rho: 0
+322.576
+pasi hibrid entropy: 62
+timp hibrid entropy: 11.7917s
+-------------
+322.576
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.73861s
+-------------
+322.576
+pasi hybrid_entropy_dp: 30
+timp hybrid_entropy_dp: 8.44605s
+-------------
+Test number 21, bsz_ct 2
+-------------
+Matricea A are Rho: 0
+147.329
+pasi hibrid entropy: 53
+timp hibrid entropy: 10.3121s
+-------------
+147.329
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.34926s
+-------------
+147.329
+pasi hybrid_entropy_dp: 29
+timp hybrid_entropy_dp: 8.43392s
+-------------
+Test number 22, bsz_ct 6
+-------------
+Matricea A are Rho: 0
+315.419
+pasi hibrid entropy: 60
+timp hibrid entropy: 11.5641s
+-------------
+315.419
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.42192s
+-------------
+315.419
+pasi hybrid_entropy_dp: 28
+timp hybrid_entropy_dp: 7.93639s
+-------------
+Test number 23, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+102.041
+pasi hibrid entropy: 65
+timp hibrid entropy: 12.6665s
+-------------
+102.041
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.0083s
+-------------
+102.041
+pasi hybrid_entropy_dp: 45
+timp hybrid_entropy_dp: 12.6301s
+-------------
+Test number 24, bsz_ct 31
+-------------
+Matricea A are Rho: 0
+37.7623
+pasi hibrid entropy: 64
+timp hibrid entropy: 12.6243s
+-------------
+37.7623
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.82489s
+-------------
+37.7623
+pasi hybrid_entropy_dp: 49
+timp hybrid_entropy_dp: 12.7439s
+-------------
+Test number 25, bsz_ct 21
+-------------
+Matricea A are Rho: 0
+429.601
+pasi hibrid entropy: 68
+timp hibrid entropy: 13.1538s
+-------------
+429.601
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.69872s
+-------------
+429.601
+pasi hybrid_entropy_dp: 44
+timp hybrid_entropy_dp: 11.8907s
+-------------
+Test number 26, bsz_ct 1
+-------------
+Matricea A are Rho: 0
+577.807
+pasi hibrid entropy: 55
+timp hibrid entropy: 10.7776s
+-------------
+577.807
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.06228s
+-------------
+577.807
+pasi hybrid_entropy_dp: 32
+timp hybrid_entropy_dp: 9.19566s
+-------------
+Test number 27, bsz_ct 20
+-------------
+Matricea A are Rho: 0
+128.832
+pasi hibrid entropy: 64
+timp hibrid entropy: 12.712s
+-------------
+128.832
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.00901s
+-------------
+128.832
+pasi hybrid_entropy_dp: 64
+timp hybrid_entropy_dp: 17.4847s
+-------------
+Test number 28, bsz_ct 13
+-------------
+Matricea A are Rho: 0
+430.341
+pasi hibrid entropy: 71
+timp hibrid entropy: 13.7013s
+-------------
+430.341
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.86288s
+-------------
+430.341
+pasi hybrid_entropy_dp: 48
+timp hybrid_entropy_dp: 13.4856s
+-------------
+Test number 29, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+484.171
+pasi hibrid entropy: 76
+timp hibrid entropy: 14.7825s
+-------------
+484.171
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.52106s
+-------------
+484.171
+pasi hybrid_entropy_dp: 58
+timp hybrid_entropy_dp: 15.25s
+-------------
+Test number 30, bsz_ct 11
+-------------
+Matricea A are Rho: 0
+291.447
+pasi hibrid entropy: 64
+timp hibrid entropy: 12.4695s
+-------------
+291.447
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.45372s
+-------------
+291.447
+pasi hybrid_entropy_dp: 46
+timp hybrid_entropy_dp: 12.222s
+-------------
+Test number 31, bsz_ct 35
+-------------
+Matricea A are Rho: 0
+590.717
+pasi hibrid entropy: 73
+timp hibrid entropy: 14.3192s
+-------------
+590.717
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.90603s
+-------------
+590.717
+pasi hybrid_entropy_dp: 58
+timp hybrid_entropy_dp: 15.654s
+-------------
+Test number 32, bsz_ct 12
+-------------
+Matricea A are Rho: 0
+210.265
+pasi hibrid entropy: 59
+timp hibrid entropy: 11.3505s
+-------------
+210.265
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.14398s
+-------------
+210.265
+pasi hybrid_entropy_dp: 38
+timp hybrid_entropy_dp: 10.3031s
+-------------
+Test number 33, bsz_ct 12
+-------------
+Matricea A are Rho: 0
+448.146
+pasi hibrid entropy: 64
+timp hibrid entropy: 12.5185s
+-------------
+448.146
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.81813s
+-------------
+448.146
+pasi hybrid_entropy_dp: 26
+timp hybrid_entropy_dp: 7.2327s
+-------------
+Test number 34, bsz_ct 18
+-------------
+Matricea A are Rho: 0
+239.093
+pasi hibrid entropy: 65
+timp hibrid entropy: 12.6397s
+-------------
+239.093
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.79854s
+-------------
+239.093
+pasi hybrid_entropy_dp: 74
+timp hybrid_entropy_dp: 19.4843s
+-------------
+Test number 35, bsz_ct 29
+-------------
+Matricea A are Rho: 0
+779.619
+pasi hibrid entropy: 73
+timp hibrid entropy: 14.5544s
+-------------
+779.619
+pasi gauss_seidel_entropy_dp: 23
+timp gauss_seidel_entropy_dp: 7.69148s
+-------------
+779.619
+pasi hybrid_entropy_dp: 63
+timp hybrid_entropy_dp: 17.2728s
+-------------
+Test number 36, bsz_ct 23
+-------------
+Matricea A are Rho: 0
+133.778
+pasi hibrid entropy: 66
+timp hibrid entropy: 12.7979s
+-------------
+133.778
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.8089s
+-------------
+133.778
+pasi hybrid_entropy_dp: 47
+timp hybrid_entropy_dp: 13.285s
+-------------
+Test number 37, bsz_ct 10
+-------------
+Matricea A are Rho: 0
+348.006
+pasi hibrid entropy: 66
+timp hibrid entropy: 12.5684s
+-------------
+348.006
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.09097s
+-------------
+348.006
+pasi hybrid_entropy_dp: 61
+timp hybrid_entropy_dp: 16.7163s
+-------------
+Test number 38, bsz_ct 15
+-------------
+Matricea A are Rho: 0
+465.219
+pasi hibrid entropy: 66
+timp hibrid entropy: 12.6563s
+-------------
+465.219
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.33989s
+-------------
+465.219
+pasi hybrid_entropy_dp: 46
+timp hybrid_entropy_dp: 12.5524s
+-------------
+Test number 39, bsz_ct 19
+-------------
+Matricea A are Rho: 0
+8.71097
+pasi hibrid entropy: 54
+timp hibrid entropy: 10.7191s
+-------------
+8.71097
+pasi gauss_seidel_entropy_dp: 14
+timp gauss_seidel_entropy_dp: 4.79633s
+-------------
+8.71097
+pasi hybrid_entropy_dp: 46
+timp hybrid_entropy_dp: 12.4497s
+-------------
+Test number 40, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+69.6299
+pasi hibrid entropy: 60
+timp hibrid entropy: 11.3367s
+-------------
+69.6299
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.52077s
+-------------
+69.6299
+pasi hybrid_entropy_dp: 30
+timp hybrid_entropy_dp: 8.30917s
+-------------
+Test number 41, bsz_ct 32
+-------------
+Matricea A are Rho: 0
+149.52
+pasi hibrid entropy: 69
+timp hibrid entropy: 13.5654s
+-------------
+149.52
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.82969s
+-------------
+149.52
+pasi hybrid_entropy_dp: 53
+timp hybrid_entropy_dp: 13.8378s
+-------------
+Test number 42, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+142.505
+pasi hibrid entropy: 72
+timp hibrid entropy: 13.8611s
+-------------
+142.505
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.49052s
+-------------
+142.505
+pasi hybrid_entropy_dp: 60
+timp hybrid_entropy_dp: 15.3524s
+-------------
+Test number 43, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+110.226
+pasi hibrid entropy: 68
+timp hibrid entropy: 13.292s
+-------------
+110.226
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.92292s
+-------------
+110.226
+pasi hybrid_entropy_dp: 35
+timp hybrid_entropy_dp: 9.40991s
+-------------
+Test number 44, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+225.86
+pasi hibrid entropy: 68
+timp hibrid entropy: 13.2045s
+-------------
+225.86
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.22954s
+-------------
+225.86
+pasi hybrid_entropy_dp: 42
+timp hybrid_entropy_dp: 11.5159s
+-------------
+Test number 45, bsz_ct 32
+-------------
+Matricea A are Rho: 0
+393.098
+pasi hibrid entropy: 74
+timp hibrid entropy: 14.9587s
+-------------
+393.098
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.78247s
+-------------
+393.098
+pasi hybrid_entropy_dp: 55
+timp hybrid_entropy_dp: 14.3535s
+-------------
+Test number 46, bsz_ct 21
+-------------
+Matricea A are Rho: 0
+695.099
+pasi hibrid entropy: 73
+timp hibrid entropy: 14.116s
+-------------
+695.099
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.02472s
+-------------
+695.099
+pasi hybrid_entropy_dp: 63
+timp hybrid_entropy_dp: 17.2363s
+-------------
+Test number 47, bsz_ct 9
+-------------
+Matricea A are Rho: 0
+229.601
+pasi hibrid entropy: 63
+timp hibrid entropy: 12.0736s
+-------------
+229.601
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.08864s
+-------------
+229.601
+pasi hybrid_entropy_dp: 33
+timp hybrid_entropy_dp: 9.07658s
+-------------
+Test number 48, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+152.001
+pasi hibrid entropy: 70
+timp hibrid entropy: 13.6242s
+-------------
+152.001
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.34945s
+-------------
+152.001
+pasi hybrid_entropy_dp: 68
+timp hybrid_entropy_dp: 19.1147s
+-------------
+Test number 49, bsz_ct 21
+-------------
+Matricea A are Rho: 0
+150.272
+pasi hibrid entropy: 58
+timp hibrid entropy: 11.2539s
+-------------
+150.272
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.16301s
+-------------
+150.272
+pasi hybrid_entropy_dp: 48
+timp hybrid_entropy_dp: 13.6257s
+-------------
+Test number 50, bsz_ct 4
+-------------
+Matricea A are Rho: 0
+417.417
+pasi hibrid entropy: 60
+timp hibrid entropy: 11.5415s
+-------------
+417.417
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.22882s
+-------------
+417.417
+pasi hybrid_entropy_dp: 31
+timp hybrid_entropy_dp: 8.77727s
+-------------
+Test number 51, bsz_ct 23
+-------------
+Matricea A are Rho: 0
+496.169
+pasi hibrid entropy: 68
+timp hibrid entropy: 12.9266s
+-------------
+496.169
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.80127s
+-------------
+496.169
+pasi hybrid_entropy_dp: 54
+timp hybrid_entropy_dp: 14.8772s
+-------------
+Test number 52, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+729.799
+pasi hibrid entropy: 73
+timp hibrid entropy: 13.9703s
+-------------
+729.799
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.52673s
+-------------
+729.799
+pasi hybrid_entropy_dp: 78
+timp hybrid_entropy_dp: 21.0505s
+-------------
+Test number 53, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+103.879
+pasi hibrid entropy: 63
+timp hibrid entropy: 12.1796s
+-------------
+103.879
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.50116s
+-------------
+103.879
+pasi hybrid_entropy_dp: 31
+timp hybrid_entropy_dp: 8.74143s
+-------------
+Test number 54, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+508.909
+pasi hibrid entropy: 76
+timp hibrid entropy: 14.9134s
+-------------
+508.909
+pasi gauss_seidel_entropy_dp: 23
+timp gauss_seidel_entropy_dp: 7.69374s
+-------------
+508.909
+pasi hybrid_entropy_dp: 52
+timp hybrid_entropy_dp: 13.9701s
+-------------
+Test number 55, bsz_ct 15
+-------------
+Matricea A are Rho: 0
+621.436
+pasi hibrid entropy: 64
+timp hibrid entropy: 12.3433s
+-------------
+621.436
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.13805s
+-------------
+621.436
+pasi hybrid_entropy_dp: 37
+timp hybrid_entropy_dp: 10.339s
+-------------
+Test number 56, bsz_ct 13
+-------------
+Matricea A are Rho: 0
+12.5227
+pasi hibrid entropy: 54
+timp hibrid entropy: 10.4355s
+-------------
+12.5227
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 4.97811s
+-------------
+12.5227
+pasi hybrid_entropy_dp: 64
+timp hybrid_entropy_dp: 16.8153s
+-------------
+Test number 57, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+623.049
+pasi hibrid entropy: 71
+timp hibrid entropy: 13.7731s
+-------------
+623.049
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.38851s
+-------------
+623.049
+pasi hybrid_entropy_dp: 45
+timp hybrid_entropy_dp: 12.4087s
+-------------
+Test number 58, bsz_ct 5
+-------------
+Matricea A are Rho: 0
+81.3704
+pasi hibrid entropy: 59
+timp hibrid entropy: 11.4629s
+-------------
+81.3704
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.43666s
+-------------
+81.3704
+pasi hybrid_entropy_dp: 31
+timp hybrid_entropy_dp: 8.83737s
+-------------
+Test number 59, bsz_ct 33
+-------------
+Matricea A are Rho: 0
+613.294
+pasi hibrid entropy: 72
+timp hibrid entropy: 13.9323s
+-------------
+613.294
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.72245s
+-------------
+613.294
+pasi hybrid_entropy_dp: 61
+timp hybrid_entropy_dp: 15.6744s
+-------------
+Test number 60, bsz_ct 14
+-------------
+Matricea A are Rho: 0
+66.7527
+pasi hibrid entropy: 55
+timp hibrid entropy: 10.6961s
+-------------
+66.7527
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.52363s
+-------------
+66.7527
+pasi hybrid_entropy_dp: 33
+timp hybrid_entropy_dp: 9.04452s
+-------------
+Test number 61, bsz_ct 24
+-------------
+Matricea A are Rho: 0
+592.675
+pasi hibrid entropy: 71
+timp hibrid entropy: 13.6841s
+-------------
+592.675
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.88602s
+-------------
+592.675
+pasi hybrid_entropy_dp: 31
+timp hybrid_entropy_dp: 9.0252s
+-------------
+Test number 62, bsz_ct 31
+-------------
+Matricea A are Rho: 0
+620.56
+pasi hibrid entropy: 78
+timp hibrid entropy: 15.2968s
+-------------
+620.56
+pasi gauss_seidel_entropy_dp: 23
+timp gauss_seidel_entropy_dp: 7.81959s
+-------------
+620.56
+pasi hybrid_entropy_dp: 55
+timp hybrid_entropy_dp: 14.4689s
+-------------
+Test number 63, bsz_ct 19
+-------------
+Matricea A are Rho: 0
+255.9
+pasi hibrid entropy: 66
+timp hibrid entropy: 12.8337s
+-------------
+255.9
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.47231s
+-------------
+255.9
+pasi hybrid_entropy_dp: 35
+timp hybrid_entropy_dp: 9.74832s
+-------------
+Test number 64, bsz_ct 20
+-------------
+Matricea A are Rho: 0
+50.3885
+pasi hibrid entropy: 62
+timp hibrid entropy: 12.0995s
+-------------
+50.3885
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.20379s
+-------------
+50.3885
+pasi hybrid_entropy_dp: 36
+timp hybrid_entropy_dp: 9.90306s
+-------------
+Test number 65, bsz_ct 7
+-------------
+Matricea A are Rho: 0
+552.746
+pasi hibrid entropy: 64
+timp hibrid entropy: 12.2744s
+-------------
+552.746
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.74815s
+-------------
+552.746
+pasi hybrid_entropy_dp: 29
+timp hybrid_entropy_dp: 8.16218s
+-------------
+Test number 66, bsz_ct 36
+-------------
+Matricea A are Rho: 0
+131.364
+pasi hibrid entropy: 71
+timp hibrid entropy: 13.7505s
+-------------
+131.364
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.84968s
+-------------
+131.364
+pasi hybrid_entropy_dp: 42
+timp hybrid_entropy_dp: 11.7098s
+-------------
+Test number 67, bsz_ct 16
+-------------
+Matricea A are Rho: 0
+612.437
+pasi hibrid entropy: 64
+timp hibrid entropy: 12.643s
+-------------
+612.437
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.49949s
+-------------
+612.437
+pasi hybrid_entropy_dp: 31
+timp hybrid_entropy_dp: 8.83208s
+-------------
+Test number 68, bsz_ct 8
+-------------
+Matricea A are Rho: 0
+71.1518
+pasi hibrid entropy: 55
+timp hibrid entropy: 10.5032s
+-------------
+71.1518
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.50477s
+-------------
+71.1518
+pasi hybrid_entropy_dp: 43
+timp hybrid_entropy_dp: 12.3641s
+-------------
+Test number 69, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+605.092
+pasi hibrid entropy: 67
+timp hibrid entropy: 13.083s
+-------------
+605.092
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.77199s
+-------------
+605.092
+pasi hybrid_entropy_dp: 41
+timp hybrid_entropy_dp: 11.0937s
+-------------
+Test number 70, bsz_ct 10
+-------------
+Matricea A are Rho: 0
+760.963
+pasi hibrid entropy: 67
+timp hibrid entropy: 12.7646s
+-------------
+760.963
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.75771s
+-------------
+760.963
+pasi hybrid_entropy_dp: 53
+timp hybrid_entropy_dp: 14.2811s
+-------------
+Test number 71, bsz_ct 1
+-------------
+Matricea A are Rho: 0
+110.967
+pasi hibrid entropy: 46
+timp hibrid entropy: 9.05885s
+-------------
+110.967
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.44978s
+-------------
+110.967
+pasi hybrid_entropy_dp: 24
+timp hybrid_entropy_dp: 7.16887s
+-------------
+Test number 72, bsz_ct 7
+-------------
+Matricea A are Rho: 0
+396.22
+pasi hibrid entropy: 61
+timp hibrid entropy: 11.9416s
+-------------
+396.22
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 6.95622s
+-------------
+396.22
+pasi hybrid_entropy_dp: 30
+timp hybrid_entropy_dp: 8.60215s
+-------------
+Test number 73, bsz_ct 2
+-------------
+Matricea A are Rho: 0
+442.636
+pasi hibrid entropy: 59
+timp hibrid entropy: 11.5314s
+-------------
+442.636
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 6.86494s
+-------------
+442.636
+pasi hybrid_entropy_dp: 24
+timp hybrid_entropy_dp: 6.88251s
+-------------
+Test number 74, bsz_ct 30
+-------------
+Matricea A are Rho: 0
+341.81
+pasi hibrid entropy: 70
+timp hibrid entropy: 13.799s
+-------------
+341.81
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.2686s
+-------------
+341.81
+pasi hybrid_entropy_dp: 58
+timp hybrid_entropy_dp: 15.9716s
+-------------
+Test number 75, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+617.97
+pasi hibrid entropy: 79
+timp hibrid entropy: 15.069s
+-------------
+617.97
+pasi gauss_seidel_entropy_dp: 14
+timp gauss_seidel_entropy_dp: 4.76845s
+-------------
+617.97
+pasi hybrid_entropy_dp: 70
+timp hybrid_entropy_dp: 19.2711s
+-------------
+Test number 76, bsz_ct 3
+-------------
+Matricea A are Rho: 0
+484.622
+pasi hibrid entropy: 56
+timp hibrid entropy: 10.6578s
+-------------
+484.622
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.10562s
+-------------
+484.622
+pasi hybrid_entropy_dp: 48
+timp hybrid_entropy_dp: 13.6732s
+-------------
+Test number 77, bsz_ct 15
+-------------
+Matricea A are Rho: 0
+58.5192
+pasi hibrid entropy: 57
+timp hibrid entropy: 11.0312s
+-------------
+58.5192
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.4256s
+-------------
+58.5192
+pasi hybrid_entropy_dp: 56
+timp hybrid_entropy_dp: 15.5619s
+-------------
+Test number 78, bsz_ct 31
+-------------
+Matricea A are Rho: 0
+171.052
+pasi hibrid entropy: 62
+timp hibrid entropy: 12.0811s
+-------------
+171.052
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.62365s
+-------------
+171.052
+pasi hybrid_entropy_dp: 53
+timp hybrid_entropy_dp: 14.8917s
+-------------
+Test number 79, bsz_ct 19
+-------------
+Matricea A are Rho: 0
+39.8436
+pasi hibrid entropy: 67
+timp hibrid entropy: 13.3594s
+-------------
+39.8436
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.15049s
+-------------
+39.8436
+pasi hybrid_entropy_dp: 42
+timp hybrid_entropy_dp: 11.4805s
+-------------
+Test number 80, bsz_ct 6
+-------------
+Matricea A are Rho: 0
+338.883
+pasi hibrid entropy: 56
+timp hibrid entropy: 11.3672s
+-------------
+338.883
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.62685s
+-------------
+338.883
+pasi hybrid_entropy_dp: 25
+timp hybrid_entropy_dp: 7.51403s
+-------------
+Test number 81, bsz_ct 23
+-------------
+Matricea A are Rho: 0
+133.397
+pasi hibrid entropy: 64
+timp hibrid entropy: 11.1869s
+-------------
+133.397
+pasi gauss_seidel_entropy_dp: 14
+timp gauss_seidel_entropy_dp: 4.90503s
+-------------
+133.397
+pasi hybrid_entropy_dp: 28
+timp hybrid_entropy_dp: 8.19285s
+-------------
+Test number 82, bsz_ct 35
+-------------
+Matricea A are Rho: 0
+424.922
+pasi hibrid entropy: 80
+timp hibrid entropy: 15.6632s
+-------------
+424.922
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.45493s
+-------------
+424.922
+pasi hybrid_entropy_dp: 63
+timp hybrid_entropy_dp: 16.4759s
+-------------
+Test number 83, bsz_ct 11
+-------------
+Matricea A are Rho: 0
+254.918
+pasi hibrid entropy: 65
+timp hibrid entropy: 12.5138s
+-------------
+254.918
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.97711s
+-------------
+254.918
+pasi hybrid_entropy_dp: 42
+timp hybrid_entropy_dp: 11.5009s
+-------------
+Test number 84, bsz_ct 14
+-------------
+Matricea A are Rho: 0
+138.514
+pasi hibrid entropy: 62
+timp hibrid entropy: 12.1155s
+-------------
+138.514
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.51479s
+-------------
+138.514
+pasi hybrid_entropy_dp: 53
+timp hybrid_entropy_dp: 14.6395s
+-------------
+Test number 85, bsz_ct 22
+-------------
+Matricea A are Rho: 0
+545.489
+pasi hibrid entropy: 69
+timp hibrid entropy: 13.223s
+-------------
+545.489
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.50815s
+-------------
+545.489
+pasi hybrid_entropy_dp: 34
+timp hybrid_entropy_dp: 9.2033s
+-------------
+Test number 86, bsz_ct 12
+-------------
+Matricea A are Rho: 0
+183.222
+pasi hibrid entropy: 59
+timp hibrid entropy: 11.7014s
+-------------
+183.222
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.28407s
+-------------
+183.222
+pasi hybrid_entropy_dp: 49
+timp hybrid_entropy_dp: 13.6838s
+-------------
+Test number 87, bsz_ct 31
+-------------
+Matricea A are Rho: 0
+238.829
+pasi hibrid entropy: 75
+timp hibrid entropy: 14.8825s
+-------------
+238.829
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.46306s
+-------------
+238.829
+pasi hybrid_entropy_dp: 56
+timp hybrid_entropy_dp: 15.6386s
+-------------
+Test number 88, bsz_ct 27
+-------------
+Matricea A are Rho: 0
+359.104
+pasi hibrid entropy: 69
+timp hibrid entropy: 13.4944s
+-------------
+359.104
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 6.44626s
+-------------
+359.104
+pasi hybrid_entropy_dp: 47
+timp hybrid_entropy_dp: 12.9883s
+-------------
+Test number 89, bsz_ct 14
+-------------
+Matricea A are Rho: 0
+194.236
+pasi hibrid entropy: 66
+timp hibrid entropy: 12.573s
+-------------
+194.236
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 4.94834s
+-------------
+194.236
+pasi hybrid_entropy_dp: 48
+timp hybrid_entropy_dp: 13.4594s
+-------------
+Test number 90, bsz_ct 28
+-------------
+Matricea A are Rho: 0
+513.764
+pasi hibrid entropy: 79
+timp hibrid entropy: 15.3494s
+-------------
+513.764
+pasi gauss_seidel_entropy_dp: 17
+timp gauss_seidel_entropy_dp: 5.67694s
+-------------
+513.764
+pasi hybrid_entropy_dp: 49
+timp hybrid_entropy_dp: 13.5883s
+-------------
+Test number 91, bsz_ct 1
+-------------
+Matricea A are Rho: 0
+649.28
+pasi hibrid entropy: 59
+timp hibrid entropy: 11.4906s
+-------------
+649.28
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 5.55656s
+-------------
+649.28
+pasi hybrid_entropy_dp: 27
+timp hybrid_entropy_dp: 8.11341s
+-------------
+Test number 92, bsz_ct 35
+-------------
+Matricea A are Rho: 0
+420.295
+pasi hibrid entropy: 75
+timp hibrid entropy: 14.733s
+-------------
+420.295
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.18831s
+-------------
+420.295
+pasi hybrid_entropy_dp: 61
+timp hybrid_entropy_dp: 15.8685s
+-------------
+Test number 93, bsz_ct 38
+-------------
+Matricea A are Rho: 0
+699.408
+pasi hibrid entropy: 79
+timp hibrid entropy: 15.5114s
+-------------
+699.408
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.36359s
+-------------
+699.408
+pasi hybrid_entropy_dp: 66
+timp hybrid_entropy_dp: 18.2798s
+-------------
+Test number 94, bsz_ct 1
+-------------
+Matricea A are Rho: 0
+590.235
+pasi hibrid entropy: 51
+timp hibrid entropy: 9.94627s
+-------------
+590.235
+pasi gauss_seidel_entropy_dp: 21
+timp gauss_seidel_entropy_dp: 7.0856s
+-------------
+590.235
+pasi hybrid_entropy_dp: 28
+timp hybrid_entropy_dp: 8.05983s
+-------------
+Test number 95, bsz_ct 16
+-------------
+Matricea A are Rho: 0
+12.1025
+pasi hibrid entropy: 50
+timp hibrid entropy: 9.84869s
+-------------
+12.1025
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.01236s
+-------------
+12.1025
+pasi hybrid_entropy_dp: 25
+timp hybrid_entropy_dp: 7.13096s
+-------------
+Test number 96, bsz_ct 15
+-------------
+Matricea A are Rho: 0
+737.329
+pasi hibrid entropy: 62
+timp hibrid entropy: 12.0606s
+-------------
+737.329
+pasi gauss_seidel_entropy_dp: 24
+timp gauss_seidel_entropy_dp: 8.31786s
+-------------
+737.329
+pasi hybrid_entropy_dp: 44
+timp hybrid_entropy_dp: 12.5924s
+-------------
+Test number 97, bsz_ct 9
+-------------
+Matricea A are Rho: 0
+341.359
+pasi hibrid entropy: 65
+timp hibrid entropy: 12.2837s
+-------------
+341.359
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.26781s
+-------------
+341.359
+pasi hybrid_entropy_dp: 33
+timp hybrid_entropy_dp: 9.25462s
+-------------
+Test number 98, bsz_ct 4
+-------------
+Matricea A are Rho: 0
+113.299
+pasi hibrid entropy: 53
+timp hibrid entropy: 10.2943s
+-------------
+113.299
+pasi gauss_seidel_entropy_dp: 28
+timp gauss_seidel_entropy_dp: 8.96331s
+-------------
+113.299
+pasi hybrid_entropy_dp: 26
+timp hybrid_entropy_dp: 7.24969s
+-------------
+Test number 99, bsz_ct 25
+-------------
+Matricea A are Rho: 0
+71.0383
+pasi hibrid entropy: 67
+timp hibrid entropy: 12.8684s
+-------------
+71.0383
+pasi gauss_seidel_entropy_dp: 15
+timp gauss_seidel_entropy_dp: 5.14693s
+-------------
+71.0383
+pasi hybrid_entropy_dp: 35
+timp hybrid_entropy_dp: 9.6426s
+-------------
+Test number 100, bsz_ct 40
+-------------
+Matricea A are Rho: 0
+554.867
+pasi hibrid entropy: 76
+timp hibrid entropy: 14.4743s
+-------------
+554.867
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 6.14701s
+-------------
+554.867
+pasi hybrid_entropy_dp: 83
+timp hybrid_entropy_dp: 24.1845s
+-------------
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$
