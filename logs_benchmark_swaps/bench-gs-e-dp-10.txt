@@ -1,0 +1,29 @@
+Matrix dimension: 1000
+fixed bucketsize coefficient = sqrt(n)/2+1, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 16.8114, bsz_ct_entropy 1
+-------------
+Matricea A are Rho: 0
+1871.73
+pasi hibrid: 48
+timp hibrid: 2.03555s
+-------------
+1871.73
+pasi gs entropy: 27
+timp gs entropy: 5.30684s
+-------------
+1871.73
+pasi hibrid entropy: 49
+timp hibrid entropy: 6.29065s
+-------------
+gs_edp: time spent sorting matrix lines : 0.337081
+gs_edp: time spent sorting shift columns: 1.31761
+gs_edp: time spent transitioning        : 0.001994
+gs_edp: time spent other                : 1.92149
+1871.73
+pasi gauss_seidel_entropy_dp: 20
+timp gauss_seidel_entropy_dp: 3.65722s
+-------------
+1871.73
+pasi hybrid_entropy_dp: 27
+timp hybrid_entropy_dp: 5.17515s
+-------------

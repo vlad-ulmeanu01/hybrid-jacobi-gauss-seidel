@@ -1,0 +1,27 @@
+NUMBER OF THREADS: 4
+Matrix dimension: 5000
+fixed bucketsize coefficient = sqrt(n)/2+1, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+Matricea A are Rho: 0
+33.6374
+pasi hibrid: 39
+timp hibrid: 6.96051s
+-------------
+33.6374
+pasi gs entropy: 36
+timp gs entropy: 49.5179s
+-------------
+33.6374
+pasi hibrid entropy: 48
+timp hibrid entropy: 61.4605s
+-------------
+gs_edp: time spent sorting matrix lines : 0.034379
+gs_edp: time spent sorting shift columns: 17.8448
+gs_edp: time spent transitioning        : 12.7559
+gs_edp: time spent other                : 2.53114
+33.6374
+pasi gauss_seidel_entropy_dp: 16
+timp gauss_seidel_entropy_dp: 33.846s
+-------------
+17 vs 12 cu std::thread pe shift_columns to match. asta e adevarul, metodele cu entropie mai au un +2 la constanta lui n^2 de la mutari prin matrice. poti sa mai scazi timpul prin ceva optimizari care oricum sunt facute mai bine de Eigen.

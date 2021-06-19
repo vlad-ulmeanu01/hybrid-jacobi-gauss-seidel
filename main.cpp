@@ -14,6 +14,7 @@
 
 #define DEBUG 0
 
+/// problema de la -march=native
 /// g++ -std=c++11 -O3 -fopenmp -march=native -lpthread -I ~/Eigen/ main.cpp -o main
 /// g++ -std=c++17 -O3 -fopenmp -march=native -lpthread -I /usr/local/include/Eigen/ main.cpp -o main
 
@@ -243,19 +244,28 @@ shift_columns_to_match(Eigen::MatrixXd &A, Eigen::MatrixXd &b, const Eigen::Matr
   for (int i = 0; i < n; i++)
     where[A(n, i)] = i;
 
+  std::vector<std::pair<int, int> > delayed_row_swaps;
+
   for (int i = 0; i < n; i++) {
     int tmp = where[perm(0, i)];
     if (tmp != i) {
       where[perm(0, i)] = i;
       where[A(n, i)] = tmp;
       b.row(i).swap(b.row(tmp));
+
+      /// ca sa mentin ordinea pe linia cu permutarile; am nevoie sa o tin actualizata aici pentru where
+      /// de aia mergea doar delayed_row_swaps si nu ar fi mers delayed_column_swaps
       A.col(i).swap(A.col(tmp));
-      A.row(i).swap(A.row(tmp));
+      //A.row(i).swap(A.row(tmp));
+      delayed_row_swaps.push_back(std::make_pair(i, tmp));
 
       if (should_pass_solution)
         x_precise.row(i).swap(x_precise.row(tmp));
     }
   }
+
+  for (std::pair<int, int> p: delayed_row_swaps)
+    A.row(p.first).swap(A.row(p.second));
 }
 
 std::pair<Eigen::MatrixXd, int>
@@ -573,7 +583,7 @@ solve_sor_analytic (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::MatrixXd b, doub
     }
   }
 
-  str_print_err += std::to_string(w);
+  str_print_err += "do your thing mingw"; //std::to_string(w);
 
   Eigen::MatrixXd x = Eigen::MatrixXd::Zero(n, 1), x0 = x;
   int pasi = 0;
@@ -605,6 +615,13 @@ solve_gauss_seidel_entropy_dp (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::Matri
     exit(0);
   }
 
+  ////TIMER
+  /**/auto start = std::chrono::steady_clock::now(), stop = std::chrono::steady_clock::now();
+  /**/auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+  /**/double time_spent_sorting_matrix_lines = 0, time_spent_sorting_shift_columns = 0;
+  /**/double time_spent_transitioning = 0, time_spent_other = 0;
+  ////TIMER
+
   int n = A.cols();
   A.conservativeResize(n+1, Eigen::NoChange);
   for (int i = 0; i < n; i++)
@@ -620,9 +637,32 @@ solve_gauss_seidel_entropy_dp (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::Matri
   ///o stare contine A, b, x_precise si x asociate. o stare e mai buna decat alta daca "distanta"
   ///dintre x.col(0) si x.col(1) e mai mica.
 
+  std::function<void(Eigen::MatrixXd &, Eigen::MatrixXd &, Eigen::MatrixXd &)> perform_transition = [&]
+  (Eigen::MatrixXd &x_, Eigen::MatrixXd &A_, Eigen::MatrixXd &b_) {
+    for (int i = 0; i < n; i++) {
+      x_(i, 0) = b_(i, 0);
+      if (0 <= i)
+        x_(i, 0) -= A_.row(i).segment(0, i) * x_.col(0).segment(0, i);
+      if (0 <= n-1-i)
+        x_(i, 0) -= A_.row(i).segment(i+1, n-1-i) * x_.col(1).segment(i+1, n-1-i);
+      x_(i, 0) /= A_(i, i);
+    }
+  };
+
   int pasi;
   for (pasi = 1; pasi <= max_pasi; pasi++) {
+    if (DEBUG) { ////TIMER
+      /**/start = std::chrono::steady_clock::now();
+    } ////TIMER
+
     Eigen::MatrixXd A_cpy = A, b_cpy = b, x_precise_cpy = x_precise, x_cpy = x;
+
+    if (DEBUG) { ////TIMER
+      /**/stop = std::chrono::steady_clock::now();
+      /**/duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+      /**/time_spent_other += duration.count() / 1000000.0;
+      /**/start = std::chrono::steady_clock::now();
+    } ////TIMER
 
     ///fac trecere cu sortare pe cpy.
     sort_matrix_lines(x_cpy, []
@@ -630,26 +670,39 @@ solve_gauss_seidel_entropy_dp (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::Matri
           return fabs(a_(0, 0) - a_(0, 1)) < fabs(b_(0, 0) - b_(0, 1));
         });
 
+    if (DEBUG) { ////TIMER
+      /**/stop = std::chrono::steady_clock::now();
+      /**/duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+      /**/time_spent_sorting_matrix_lines += duration.count() / 1000000.0;
+      /**/start = std::chrono::steady_clock::now();
+    } ////TIMER
+
     /// aduc si x_precise_cpy la forma dorita.
     shift_columns_to_match(A_cpy, b_cpy, x_cpy.col(2).transpose(), should_pass_solution, x_precise_cpy);
+
+    if (DEBUG) { ////TIMER
+      /**/stop = std::chrono::steady_clock::now();
+      /**/duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+      /**/time_spent_sorting_shift_columns += duration.count() / 1000000.0;
+      /**/start = std::chrono::steady_clock::now();
+    } ////TIMER
 
     ///acum fac trecere directa si pe normal si pe copie.
     x.col(1) = x.col(0);
     x_cpy.col(1) = x_cpy.col(0);
-    for (int i = 0; i < n; i++) {
-      x(i, 0) = b(i, 0);
-      x_cpy(i, 0) = b_cpy(i, 0);
-      if (0 <= i) {
-        x(i, 0) -= A.row(i).segment(0, i) * x.col(0).segment(0, i);
-        x_cpy(i, 0) -= A_cpy.row(i).segment(0, i) * x_cpy.col(0).segment(0, i);
-      }
-      if (0 <= n-1-i) {
-        x(i, 0) -= A.row(i).segment(i+1, n-1-i) * x.col(1).segment(i+1, n-1-i);
-        x_cpy(i, 0) -= A_cpy.row(i).segment(i+1, n-1-i) * x_cpy.col(1).segment(i+1, n-1-i);
-      }
-      x(i, 0) /= A(i, i);
-      x_cpy(i, 0) /= A_cpy(i, i);
-    }
+
+    std::thread th1(perform_transition, std::ref(x), std::ref(A), std::ref(b));
+    std::thread th2(perform_transition, std::ref(x_cpy), std::ref(A_cpy), std::ref(b_cpy));
+
+    if (DEBUG) { ////TIMER
+      /**/stop = std::chrono::steady_clock::now();
+      /**/duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+      /**/time_spent_transitioning += duration.count() / 1000000.0;
+      /**/start = std::chrono::steady_clock::now();
+    } ////TIMER
+
+    th1.join();
+    th2.join();
 
 //    if ((x.col(0) - x_precise).lpNorm<Eigen::Infinity>() >
 //        (x_cpy.col(0) - x_precise_cpy).lpNorm<Eigen::Infinity>()) {
@@ -671,15 +724,44 @@ solve_gauss_seidel_entropy_dp (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::Matri
       print_error_to_solution(pasi, should_pass_solution, "gauss_seidel_entropy_dp_1",
                               x.col(0), x.col(1), x_precise);
 
+    if (DEBUG) { ////TIMER
+      /**/stop = std::chrono::steady_clock::now();
+      /**/duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+      /**/time_spent_other += duration.count() / 1000000.0;
+    } ////TIMER
+
     if ((x.col(0) - x.col(1)).lpNorm<Eigen::Infinity>() <= tol)
       break;
   }
+
+  if (DEBUG) { ////TIMER
+    /**/start = std::chrono::steady_clock::now();
+  } ////TIMER
 
   sort_matrix_lines(x, []
   (const Eigen::MatrixXd &a_, const Eigen::MatrixXd &b_) {
     return a_(0, 2) < b_(0, 2);
   });
+
+  if (DEBUG) { ////TIMER
+    /**/stop = std::chrono::steady_clock::now();
+    /**/duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    /**/time_spent_sorting_matrix_lines += duration.count() / 1000000.0;
+    /**/start = std::chrono::steady_clock::now();
+  } ////TIMER
+
   shift_columns_to_match(A, b, x.col(2).transpose(), should_pass_solution, x_precise);
+
+  if (DEBUG) { ////TIMER
+    /**/stop = std::chrono::steady_clock::now();
+    /**/duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    /**/time_spent_sorting_shift_columns += duration.count() / 1000000.0;
+
+    std::cout << "gs_edp: time spent sorting matrix lines : " << time_spent_sorting_matrix_lines << '\n';
+    std::cout << "gs_edp: time spent sorting shift columns: " << time_spent_sorting_shift_columns << '\n';
+    std::cout << "gs_edp: time spent transitioning        : " << time_spent_transitioning << '\n';
+    std::cout << "gs_edp: time spent other                : " << time_spent_other << '\n';
+  } ////TIMER
 
   return std::make_pair(x.col(0), pasi);
 }
@@ -1176,19 +1258,19 @@ nonentropy_stresstest (std::mt19937 &mt)
 void
 entropy_convergencetest (std::mt19937 &mt)
 {
-  bool should_generate_solution = true,
+  bool should_generate_solution = false,  ///T
        should_calculate_radial_spectrum = false,
        should_solve_jacobi = false,
        should_solve_gauss_seidel = false,
-       should_solve_jacobi_analytic_parallel = true,
-       should_solve_gauss_seidel_analytic = true,
+       should_solve_jacobi_analytic_parallel = false,  ///T
+       should_solve_gauss_seidel_analytic = false,  ///T
        should_hybrid_jacobi_gauss_seidel = true,
        should_solve_gauss_seidel_entropy = true,
        should_hybrid_entropy_jacobi_gauss_seidel = true,
-       should_solve_sor_analytic = true,
+       should_solve_sor_analytic = false,  ///T
        should_solve_gauss_seidel_entropy_dp = true,
        should_hybrid_entropy_dp = true,
-       should_pass_solution = true,
+       should_pass_solution = false,  ///T
        should_differentiate_generated_matrix_weight = true;
 
   std::cout << "NUMBER OF THREADS: " << std::thread::hardware_concurrency() << '\n' << std::flush;

@@ -1,0 +1,29 @@
+NUMBER OF THREADS: 8
+Matrix dimension: 5000
+fixed bucketsize coefficient = sqrt(n)/2+1, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+Matricea A are Rho: 0
+261.886
+pasi hibrid: 45
+timp hibrid: 19.7915s
+-------------
+261.886
+pasi gs entropy: 32
+timp gs entropy: 157.17s
+-------------
+261.886
+pasi hibrid entropy: 45
+timp hibrid entropy: 133.503s
+-------------
+261.886
+pasi gauss_seidel_entropy_dp: 18
+timp gauss_seidel_entropy_dp: 90.5219s
+-------------
+261.886
+pasi hybrid_entropy_dp: 25
+timp hybrid_entropy_dp: 88.8675s
+-------------
+
+Process returned 0 (0x0)   execution time : 522.821 s
+Press any key to continue.

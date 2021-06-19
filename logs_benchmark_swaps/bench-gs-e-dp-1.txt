@@ -1,0 +1,46 @@
+NUMBER OF THREADS: 8
+Matrix dimension: 5000
+fixed bucketsize coefficient = sqrt(n)/2+1, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+Matricea A are Rho: 0
+301.804
+pasi jacobi_parallel: 156
+timp jacobi_parallel: 75.4381s
+-------------
+301.804
+pasi gauss_seidel_analytic: 95
+timp gauss_seidel_analytic: 218.479s
+-------------
+301.804
+pasi hibrid: 47
+timp hibrid: 21.6367s
+-------------
+301.804
+pasi gs entropy: 41
+timp gs entropy: 200.437s
+-------------
+301.804
+pasi hibrid entropy: 47
+timp hibrid entropy: 141.537s
+-------------
+gs_edp: time spent sorting      : 50.2241
+gs_edp: time spent transitioning: 86.2572
+gs_edp: time spent other        : 0.581439
+301.804
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 138.832s
+-------------
+301.804
+pasi hybrid_entropy_dp: 25
+timp hybrid_entropy_dp: 89.3397s
+-------------
+
+Process returned 0 (0x0)   execution time : 913.039 s
+Press any key to continue.
+
+timpul per iteratie la tranzitie este ~2x fata de cel de la gauss seidel simplu (pt ca faci de 2x, ok)
+
+timpul petrecut la sortare e prea mare + ciudat ca este facut inainte de tranzitie in iteratie
+plus ca timpul other de la sf iteratiei e f mic
+sparge timpii pe sortare pe fiecare iteratie in particular si fa grafic. benchul separat arata timpi ok pentru sortare, nu ce se vede aici.

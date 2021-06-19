@@ -1,0 +1,38 @@
+NUMBER OF THREADS: 4
+Matrix dimension: 5000
+fixed bucketsize coefficient = sqrt(n)/2+1, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+Matricea A are Rho: 0
+281.698
+pasi jacobi_parallel: 126
+timp jacobi_parallel: 20.3292s
+-------------
+281.698
+pasi gauss_seidel_analytic: 82
+timp gauss_seidel_analytic: 24.8102s
+-------------
+281.698
+pasi hibrid: 45
+timp hibrid: 7.15871s
+-------------
+281.698
+pasi gs entropy: 36
+timp gs entropy: 36.5388s
+-------------
+281.698
+pasi hibrid entropy: 48
+timp hibrid entropy: 42.2593s
+-------------
+gs_edp: time spent sorting      : 19.4939
+gs_edp: time spent transitioning: 14.164
+gs_edp: time spent other        : 0.115531
+281.698
+pasi gauss_seidel_entropy_dp: 19
+timp gauss_seidel_entropy_dp: 34.3568s
+-------------
+281.698
+pasi hybrid_entropy_dp: 42
+timp hybrid_entropy_dp: 58.7957s
+-------------
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$
