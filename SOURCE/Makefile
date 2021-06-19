@@ -13,7 +13,7 @@ main: main.cpp utilities.h utilities.cpp jacobi.h jacobi.cpp gauss_seidel.h \
 	-lm -o main
 
 pack:
-	zip -FSr hybrid_jgs_e_dp.zip Makefile *.c *.h
+	zip -FSr hybrid_jgs_e_dp.zip Makefile *.cpp *.h
 
 clean:
 	rm -f $(TARGETS)
