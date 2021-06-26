@@ -31,8 +31,8 @@ solve_sor_analytic (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::MatrixXd b, doub
       }
 
   double w = -1.0, best_Rho = 1.0 * (1<<30);
-  std::uniform_real_distribution<double> distr(0.7, 0.85);
-  for (int z = 0; z < 25; z++) {
+  std::uniform_real_distribution<double> distr(0, 2);
+  for (int z = 0; z < 5; z++) {
     double now_w = distr(mt);
     double Rho = spectral_radius(mt, (D + now_w * L).inverse() * ((1 - now_w) * D - now_w * U));
     if (z == 0 || best_Rho > Rho) {
@@ -41,7 +41,7 @@ solve_sor_analytic (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::MatrixXd b, doub
     }
   }
 
-  str_print_err += "do your thing mingw"; //std::to_string(w);
+  str_print_err += std::to_string(w);
 
   Eigen::MatrixXd x = Eigen::MatrixXd::Zero(n, 1), x0 = x;
   int pasi = 0;

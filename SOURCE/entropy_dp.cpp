@@ -101,8 +101,9 @@ solve_gauss_seidel_entropy_dp (std::mt19937 &mt, Eigen::MatrixXd A, Eigen::Matri
 
 //    if ((x.col(0) - x_precise).lpNorm<Eigen::Infinity>() >
 //        (x_cpy.col(0) - x_precise_cpy).lpNorm<Eigen::Infinity>()) {
-    if ((x.col(0) - x.col(1)).lpNorm<Eigen::Infinity>() <
-        (x_cpy.col(0) - x_cpy.col(1)).lpNorm<Eigen::Infinity>()) {
+    if (pasi <= max_pasi &&
+        (x.col(0) - x.col(1)).lpNorm<Eigen::Infinity>() <
+        (x_cpy.col(0) - x_cpy.col(1)).lpNorm<Eigen::Infinity>()) { ///norma 2 e mult mai slaba??
       did_sort_on_last_step = true;
       A = A_cpy;
       b = b_cpy;

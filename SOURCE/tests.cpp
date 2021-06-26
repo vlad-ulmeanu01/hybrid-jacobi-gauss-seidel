@@ -2,14 +2,14 @@
 
 void
 one_simulation (std::mt19937 &mt, int n, int nt, double bucketsize_coefficient,
-  double coef_a, double coef_b,
+  double coef_a, double coef_b, double coef_sparse,
   bool should_generate_solution, bool should_calculate_radial_spectrum, bool should_solve_jacobi,
   bool should_solve_gauss_seidel, bool should_solve_jacobi_analytic_parallel,
   bool should_solve_gauss_seidel_analytic, bool should_hybrid_jacobi_gauss_seidel,
   bool should_solve_gauss_seidel_entropy, bool should_hybrid_entropy_jacobi_gauss_seidel,
   bool should_solve_sor_analytic, bool should_solve_gauss_seidel_entropy_dp,
   bool should_hybrid_entropy_dp,
-  bool should_pass_solution, bool should_differentiate_generated_matrix_weight)
+  bool should_pass_solution, bool is_system_dense, bool should_differentiate_generated_matrix_weight)
 {
   double bucketsize_coefficient_entropy = 1; //;bucketsize_coefficient * 2 / 3;
   ///se pare ca pentru entropy (dp sau nu) este mai bine sa am 3 galeti in loc de 2.
@@ -19,28 +19,29 @@ one_simulation (std::mt19937 &mt, int n, int nt, double bucketsize_coefficient,
 
   auto start = std::chrono::steady_clock::now(), stop = std::chrono::steady_clock::now();
 
-  auto A_r = generate_solvable_iterative_matrix
-             (mt, n, should_differentiate_generated_matrix_weight, coef_a, should_calculate_radial_spectrum);
-  ///true = greutate shiftata peste diagonala principala.
-  std::cout << "Matricea A are Rho: " << A_r.second << '\n';
-
-  Eigen::MatrixXd A = A_r.first;
-
-  Eigen::MatrixXd b = generate_random_matrix_mt(mt, n, 1, 0, coef_b);
-
-  Eigen::MatrixXd x_precise;
-
-  if (should_generate_solution)
+  Eigen::MatrixXd A = Eigen::MatrixXd::Zero(n, n), b = Eigen::MatrixXd::Zero(n, 1), x_precise = Eigen::MatrixXd::Zero(n, 1);
+  if (is_system_dense)
   {
-    start = std::chrono::steady_clock::now();
-    x_precise = A.colPivHouseholderQr().solve(b);
-    stop = std::chrono::steady_clock::now();
-    auto duration_hholder = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    std::cout << "timp hholder: " << duration_hholder.count() / 1000000.0 << "s\n-------------\n";
+    auto A_r = generate_solvable_iterative_matrix
+               (mt, n, should_differentiate_generated_matrix_weight, coef_a, should_calculate_radial_spectrum);
+    ///true = greutate shiftata peste diagonala principala.
+    std::cout << "Matricea A are Rho: " << A_r.second << '\n';
+
+    A = A_r.first;
+    b = generate_random_matrix_mt(mt, n, 1, 0, coef_b);
+
+    if (should_generate_solution) {
+      start = std::chrono::steady_clock::now();
+      x_precise = A.colPivHouseholderQr().solve(b);
+      stop = std::chrono::steady_clock::now();
+      auto duration_hholder = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+      std::cout << "timp hholder: " << duration_hholder.count() / 1000000.0 << "s\n-------------\n";
+    } else
+      x_precise = Eigen::MatrixXd::Zero(n, 1);
   }
   else
   {
-    x_precise = Eigen::MatrixXd::Zero(n, 1);
+    populate_sparse_matrix(mt, A, x_precise, b, coef_sparse, 0, 1000);
   }
 
   if (should_solve_jacobi)
@@ -230,7 +231,8 @@ nonentropy_stresstest (std::mt19937 &mt)
        should_solve_sor_analytic = false,
        should_solve_gauss_seidel_entropy_dp = false,
        should_hybrid_entropy_dp = false,
-       should_pass_solution = false;
+       should_pass_solution = false,
+       is_system_dense = true;
 
   int n, num_tests[8] = {0};
 
@@ -260,56 +262,56 @@ nonentropy_stresstest (std::mt19937 &mt)
 
   std::cout << "\n\n(variating bucketsize coefficient, a_coef 1, b_coef 1, eq weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[0]; nt++) {
-    one_simulation(mt, n, nt, distr_int(mt), 1.0, 1.0,
+    one_simulation(mt, n, nt, distr_int(mt), 1.0, 1.0, 0.0, /// <- ult este coef_sparse, nu ai treaba aici.
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, false);
+    should_pass_solution, is_system_dense, false);
 
     std::cout << std::flush;
   }
 
   std::cout << "\n\n(variating bucketsize coefficient, a_coef 1000, b_coef 1000, eq weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[1]; nt++) {
-    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0,
+    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, false);
+    should_pass_solution, is_system_dense, false);
 
     std::cout << std::flush;
   }
 
   std::cout << "\n\n(variating bucketsize coefficient, a_coef 1, b_coef 1, diff weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[2]; nt++) {
-    one_simulation(mt, n, nt, distr_int(mt), 1.0, 1.0,
+    one_simulation(mt, n, nt, distr_int(mt), 1.0, 1.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, true);
+    should_pass_solution, is_system_dense, true);
 
     std::cout << std::flush;
   }
 
   std::cout << "\n\n(variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[3]; nt++) {
-    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0,
+    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, true);
+    should_pass_solution, is_system_dense, true);
 
     std::cout << std::flush;
   }
@@ -318,56 +320,56 @@ nonentropy_stresstest (std::mt19937 &mt)
 
   std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1, b_coef 1, eq weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[4]; nt++) {
-    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1.0, 1.0,
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1.0, 1.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, false);
+    should_pass_solution, is_system_dense, false);
 
     std::cout << std::flush;
   }
 
   std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1000, b_coef 1000, eq weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[5]; nt++) {
-    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1000.0, 1000.0,
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1000.0, 1000.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, false);
+    should_pass_solution, is_system_dense, false);
 
     std::cout << std::flush;
   }
 
   std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1, b_coef 1, diff weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[6]; nt++) {
-    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1.0, 1.0,
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1.0, 1.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, true);
+    should_pass_solution, is_system_dense, true);
 
     std::cout << std::flush;
   }
 
   std::cout << "\n\n(fixed bucketsize coefficient = sqrt(n)/2, a_coef 1000, b_coef 1000, diff weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[7]; nt++) {
-    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1000.0, 1000.0,
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1000.0, 1000.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, true);
+    should_pass_solution, is_system_dense, true);
 
     std::cout << std::flush;
   }
@@ -389,6 +391,7 @@ entropy_convergencetest (std::mt19937 &mt)
        should_solve_gauss_seidel_entropy_dp = true,
        should_hybrid_entropy_dp = true,
        should_pass_solution = false,  ///T
+       is_system_dense = true,
        should_differentiate_generated_matrix_weight = true;
 
   std::cout << "NUMBER OF THREADS: " << std::thread::hardware_concurrency() << '\n' << std::flush;
@@ -400,14 +403,14 @@ entropy_convergencetest (std::mt19937 &mt)
   std::cout << "fixed bucketsize coefficient = sqrt(n)/2+1, a_coef 1000, b_coef 1000, diff weight):\n" << std::flush;
   ///incearca si norma 2 in loc de inf?
 
-  one_simulation(mt, n, 1, sqrt(n) / 2 + 1, 1000.0, 1000.0,
+  one_simulation(mt, n, 1, sqrt(n) / 2 + 1, 1000.0, 1000.0, 0.0,
   should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
   should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
   should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
   should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
   should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
   should_hybrid_entropy_dp,
-  should_pass_solution, should_differentiate_generated_matrix_weight);
+  should_pass_solution, is_system_dense, should_differentiate_generated_matrix_weight);
 }
 
 void
@@ -425,7 +428,8 @@ dp_stresstest (std::mt19937 &mt)
        should_solve_sor_analytic = false,
        should_solve_gauss_seidel_entropy_dp = true,
        should_hybrid_entropy_dp = true,
-       should_pass_solution = false;
+       should_pass_solution = false,
+       is_system_dense = true;
 
   int n, num_tests[8] = {0};
 
@@ -440,14 +444,97 @@ dp_stresstest (std::mt19937 &mt)
 
   std::cout << "\n\n(variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight):\n" << std::flush;
   for (int nt = 1; nt <= num_tests[0]; nt++) {
-    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0,
+    one_simulation(mt, n, nt, distr_int(mt), 1000.0, 1000.0, 0.0,
     should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
     should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
     should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
     should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
     should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
     should_hybrid_entropy_dp,
-    should_pass_solution, true); /// ultimul parametru este should_differentiate_generated_matrix_weight
+    should_pass_solution, is_system_dense, true); /// ultimul parametru este should_differentiate_generated_matrix_weight
+
+    std::cout << std::flush;
+  }
+}
+
+void
+small_sparse (std::mt19937 &mt)
+{
+  int n = 10;
+  Eigen::MatrixXd A = Eigen::MatrixXd::Zero(n, n), b = Eigen::MatrixXd::Zero(n, 1), x_precise = Eigen::MatrixXd::Zero(n, 1);
+  double tol = 1e-5;
+
+  A << 4, -1, -1,  0,  0,  0,  0,  0,  0,  0,
+      -1,  5, -1, -1, -1,  0,  0,  0,  0,  0,
+      -1, -1,  5,  0, -1, -1,  0,  0,  0,  0,
+       0, -1,  0,  5, -1,  0, -1, -1,  0,  0,
+       0, -1, -1, -1,  6, -1,  0, -1, -1,  0,
+       0,  0, -1,  0, -1,  5,  0,  0, -1, -1,
+       0,  0,  0, -1,  0,  0,  4, -1,  0,  0,
+       0,  0,  0, -1, -1,  0, -1,  5, -1,  0,
+       0,  0,  0,  0, -1, -1,  0, -1,  5, -1,
+       0,  0,  0,  0,  0, -1,  0,  0, -1,  4;
+
+  b << 0, 0, 0, 0, 0, 0, 1, 1, 1, 1;
+
+  auto pair_jacobi_parallel = solve_jacobi_analytic_parallel(A, b, tol, 100, false, x_precise);
+  std::cout << "jacobi parallel " << pair_jacobi_parallel.second << '\n';
+
+  auto pair_gauss_seidel = solve_gauss_seidel_analytic(A, b, tol, 100, false, x_precise);
+  std::cout << "gauss seidel analytic " << pair_gauss_seidel.second << '\n';
+
+  auto pair_hybrid = hybrid_jacobi_gauss_seidel(A, b, tol, 100, sqrt(n)/2+1, false, x_precise);
+  std::cout << "hybrid " << pair_hybrid.second << '\n';
+
+  auto pair_gse_dp = solve_gauss_seidel_entropy_dp(mt, A, b, tol, 100, true, x_precise);
+  std::cout << "entropy dp " << pair_gse_dp.second << '\n';
+
+  auto pair_hgse_dp = hybrid_entropy_dp(mt, A, b, tol, 100, 1, false, x_precise);
+  std::cout << "hybrid entropy dp " << pair_hgse_dp.second << '\n';
+
+  std::cout << pair_gse_dp.first << '\n';
+}
+
+void
+sparse_stresstest (std::mt19937 &mt)
+{
+  bool should_generate_solution = false,
+       should_calculate_radial_spectrum = false,
+       should_solve_jacobi = false,
+       should_solve_gauss_seidel = false,
+       should_solve_jacobi_analytic_parallel = true,
+       should_solve_gauss_seidel_analytic = true,
+       should_hybrid_jacobi_gauss_seidel = true,
+       should_solve_gauss_seidel_entropy = true,
+       should_hybrid_entropy_jacobi_gauss_seidel = true,
+       should_solve_sor_analytic = true,
+       should_solve_gauss_seidel_entropy_dp = true,
+       should_hybrid_entropy_dp = true,
+       should_pass_solution = true,
+       is_system_dense = false;
+
+  int n, num_tests[8] = {0};
+  double coef_sparse = 0.0;
+
+  std::cout << "NUMBER OF THREADS: " << std::thread::hardware_concurrency() << '\n' << std::flush;
+
+  std::cout << "Matrix dimension: " << std::flush;
+  std::cin >> n;
+  std::cout << "Percentage in [0, 1] of nonzero elements in sparse matrix: " << std::flush;
+  std::cin >> coef_sparse;
+  std::cout << "Number of tests (sparse system, fixed bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight): " << std::flush;
+  std::cin >> num_tests[0];
+
+  std::cout << "\n\n(variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight):\n" << std::flush;
+  for (int nt = 1; nt <= num_tests[0]; nt++) {
+    one_simulation(mt, n, nt, sqrt(n) / 2 + 1, 1000.0, 1000.0, coef_sparse,
+    should_generate_solution, should_calculate_radial_spectrum, should_solve_jacobi,
+    should_solve_gauss_seidel, should_solve_jacobi_analytic_parallel,
+    should_solve_gauss_seidel_analytic, should_hybrid_jacobi_gauss_seidel,
+    should_solve_gauss_seidel_entropy, should_hybrid_entropy_jacobi_gauss_seidel,
+    should_solve_sor_analytic, should_solve_gauss_seidel_entropy_dp,
+    should_hybrid_entropy_dp,
+    should_pass_solution, is_system_dense, true); /// ultimul parametru este should_differentiate_generated_matrix_weight
 
     std::cout << std::flush;
   }

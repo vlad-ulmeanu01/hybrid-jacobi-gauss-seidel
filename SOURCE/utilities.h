@@ -24,6 +24,10 @@ print_error_to_solution (int pasi, bool should_pass_solution, std::string text,
 Eigen::MatrixXd
 generate_random_matrix_mt (std::mt19937 &mt, int n, int m, double mi, double Ma);
 
+void
+populate_sparse_matrix
+(std::mt19937 &mt, Eigen::MatrixXd &A, Eigen::MatrixXd &x_precise, Eigen::MatrixXd &b, double p, double mi, double Ma);
+
 double
 spectral_radius (std::mt19937 &mt, Eigen::MatrixXd A_e);
 

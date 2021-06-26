@@ -31,6 +31,9 @@ void
 jacobi_parallel_function (Eigen::MatrixXd &A, Eigen::MatrixXd &b, Eigen::MatrixXd &x,
                           Eigen::MatrixXd &x0, int n, int start_itv, int end_itv)
 {
+  if (start_itv > end_itv)
+    return;
+
   assert(start_itv >= 0 && start_itv < n && end_itv >= 0 && end_itv < n);
   for (int i = start_itv; i <= end_itv; i++) {
     x(i, 0) = b(i, 0);

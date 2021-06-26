@@ -23,8 +23,10 @@ main()
   mt.seed(time(NULL));
 
   //nonentropy_stresstest(mt);
-  entropy_convergencetest(mt);
+  //entropy_convergencetest(mt);
   //dp_stresstest(mt);
+  //small_sparse(mt);
+  sparse_stresstest(mt);
 
   return 0;
 }

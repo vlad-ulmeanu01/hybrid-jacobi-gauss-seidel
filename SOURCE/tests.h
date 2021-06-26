@@ -11,19 +11,25 @@
 
 void
 one_simulation (std::mt19937 &mt, int n, int nt, double bucketsize_coefficient,
-  double coef_a, double coef_b,
+  double coef_a, double coef_b, double coef_sparse,
   bool should_generate_solution, bool should_calculate_radial_spectrum, bool should_solve_jacobi,
   bool should_solve_gauss_seidel, bool should_solve_jacobi_analytic_parallel,
   bool should_solve_gauss_seidel_analytic, bool should_hybrid_jacobi_gauss_seidel,
   bool should_solve_gauss_seidel_entropy, bool should_hybrid_entropy_jacobi_gauss_seidel,
   bool should_solve_sor_analytic, bool should_solve_gauss_seidel_entropy_dp,
   bool should_hybrid_entropy_dp,
-  bool should_pass_solution, bool should_differentiate_generated_matrix_weight);
+  bool should_pass_solution, bool is_system_dense, bool should_differentiate_generated_matrix_weight);
 
 void
 entropy_convergencetest (std::mt19937 &mt);
 
 void
 dp_stresstest (std::mt19937 &mt);
+
+void
+small_sparse (std::mt19937 &mt);
+
+void
+sparse_stresstest (std::mt19937 &mt);
 
 #endif

@@ -1,0 +1,136 @@
+[vlad_adrian.ulmeanu@fep7-1 hibrid-jacobi-gauss-seidel]$ ./main
+NUMBER OF THREADS: 4
+Matrix dimension: 5000
+Percentage in [0, 1] of nonzero elements in sparse matrix: 0.3
+Number of tests (sparse system, fixed bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight): 10
+
+
+(variating bucketsize coefficient, a_coef 1000, b_coef 1000, diff weight):
+Test number 1, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+4.66781e-06
+pasi jacobi_parallel: 164
+timp jacobi_parallel: 24.8582s
+-------------
+1.25791e-06
+pasi gauss_seidel_analytic: 13
+timp gauss_seidel_analytic: 4.06826s
+-------------
+4.26185e-06
+pasi hibrid: 24
+timp hibrid: 3.80177s
+-------------
+9.69813e-07
+pasi gs entropy: 17
+timp gs entropy: 19.2515s
+-------------
+1.42338e-06
+pasi hibrid entropy: 17
+timp hibrid entropy: 16.871s
+-------------
+G_jacobi has 0.0235055 biggest C-R part
+0.0289213
+pasi sor analytic: 100
+timp sor analytic: 8234.11s
+-------------
+1.19821e-06
+pasi gauss_seidel_entropy_dp: 13
+timp gauss_seidel_entropy_dp: 21.8575s
+-------------
+1.51632e-06
+pasi hybrid_entropy_dp: 13
+timp hybrid_entropy_dp: 18.1008s
+-------------
+Test number 2, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+4.26491e-06
+pasi jacobi_parallel: 165
+timp jacobi_parallel: 25.446s
+-------------
+1.26028e-06
+pasi gauss_seidel_analytic: 13
+timp gauss_seidel_analytic: 4.14457s
+-------------
+4.19169e-06
+pasi hibrid: 24
+timp hibrid: 3.85427s
+-------------
+1.00139e-06
+pasi gs entropy: 17
+timp gs entropy: 21.7976s
+-------------
+1.46768e-06
+pasi hibrid entropy: 17
+timp hibrid entropy: 19.2887s
+-------------
+G_jacobi has 0.0235308 biggest C-R part
+6.01461e-07
+pasi sor analytic: 13
+timp sor analytic: 8704.22s
+-------------
+1.47448e-07
+pasi gauss_seidel_entropy_dp: 14
+timp gauss_seidel_entropy_dp: 23.9829s
+-------------
+6.62718e-07
+pasi hybrid_entropy_dp: 13
+timp hybrid_entropy_dp: 18.2606s
+-------------
+Test number 3, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+4.54055e-06
+pasi jacobi_parallel: 163
+timp jacobi_parallel: 24.902s
+-------------
+1.26745e-06
+pasi gauss_seidel_analytic: 13
+timp gauss_seidel_analytic: 4.10151s
+-------------
+4.1536e-06
+pasi hibrid: 24
+timp hibrid: 3.88814s
+-------------
+1.02798e-06
+pasi gs entropy: 17
+timp gs entropy: 21.7103s
+-------------
+1.52934e-06
+pasi hibrid entropy: 17
+timp hibrid entropy: 19.7644s
+-------------
+G_jacobi has 0.0234313 biggest C-R part
+1.87402e-06
+pasi sor analytic: 15
+timp sor analytic: 8610.99s
+-------------
+3.1354e-07
+pasi gauss_seidel_entropy_dp: 13
+timp gauss_seidel_entropy_dp: 22.2798s
+-------------
+1.47172e-06
+pasi hybrid_entropy_dp: 13
+timp hybrid_entropy_dp: 18.0646s
+-------------
+Test number 4, bsz_ct 36.3553, bsz_ct_entropy 1
+-------------
+4.65361e-06
+pasi jacobi_parallel: 165
+timp jacobi_parallel: 24.7762s
+-------------
+1.28948e-06
+pasi gauss_seidel_analytic: 13
+timp gauss_seidel_analytic: 4.01692s
+-------------
+4.32969e-06
+pasi hibrid: 24
+timp hibrid: 3.74212s
+-------------
+1.04551e-06
+pasi gs entropy: 17
+timp gs entropy: 21.763s
+-------------
+1.56164e-06
+pasi hibrid entropy: 17
+timp hibrid entropy: 19.2983s
+-------------
+G_jacobi has 0.0234963 biggest C-R part

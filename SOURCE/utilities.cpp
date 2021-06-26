@@ -41,6 +41,35 @@ generate_random_matrix_mt (std::mt19937 &mt, int n, int m, double mi, double Ma)
   return A;
 }
 
+void
+populate_sparse_matrix
+(std::mt19937 &mt, Eigen::MatrixXd &A, Eigen::MatrixXd &x_precise, Eigen::MatrixXd &b, double p, double mi, double Ma)
+{
+  ///primeste niste matrice goale A, x_precise si b.
+  ///populeaza (p*100)% din valorile din A, x_precise cu valori != 0 si calculeaza si b.
+  int n = A.rows();
+  assert(0 <= p && p <= 1 && n == A.cols() && n == x_precise.rows() && n == b.rows() && x_precise.cols() == 1 && b.cols() == 1);
+  std::uniform_real_distribution<double> distr(mi, Ma), prob(0, 1);
+  Eigen::MatrixXd rand_coef = generate_random_matrix_mt(mt, 1, n, 0, 1);
+  for (int i = 0; i < n; i++) {
+    double sum = 0;
+    for (int j = 0; j < n; j++) {
+      if (i != j) {
+        if (prob(mt) <= p) {
+          A(i, j) = distr(mt);
+          sum += A(i, j);
+        } else
+          A(i, j) = 0;
+      }
+    }
+    A(i, i) = (1 + 0.25 * rand_coef(0, i)) * sum;
+  }
+
+  for (int i = 0; i < n; i++)
+    x_precise(i, 0) = distr(mt);
+
+  b = A * x_precise;
+}
 
 double
 spectral_radius (std::mt19937 &mt, Eigen::MatrixXd A_e)
