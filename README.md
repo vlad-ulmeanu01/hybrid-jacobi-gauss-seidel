@@ -1,17 +1,11 @@
 # Abstract
 
-Let us consider Gauss-Seidel’s method for solving systems of linear equations through a sequence of iterations. Compared
-with the matriceal variant, the analytic variant is expressed in such a way that it cannot be simply parallelized, requiring additional data
-that didn’t exist in any previous step in any particular moment. The suggested method proposes that each new variable should lose
-some amount of new data in the recurrence formula, such that the solution vector could be split into buckets, resulting in any bucket’s
-contents being calculated in parallel.
+Numerical linear algebra algorithms and parallel programming are the essence of grid-like computational systems. Different types of numerical methods based on relevant criteria, such as hybrid, or entropy variants are identified, presented, and implemented as efficient algorithms on parallel computers. This paper reveals the time and complexity of the algorithms, as well as their convergence and shows the usefulness of these concepts for the design of efficient large linear solvers, by illustrating them in dense matrix computations.
 
-We present numerical results for strictly diagonally dominant matrices, for which the runtime does significantly improve, and the
-required number of iterations drops as well.
+One of the aims of this study is the observation of parallel tasks, which are of numerical nature and can arise in many interdisciplinary engineering approaches and consequently in many programming problems, as well as finding and analyzing general algorithms in linear algebra, which are useful in many solutions involving the big data paradigm.
 
-Furthermore, an analytic heuristic approach for Gauss-Seidel is shown that may shuffle the rows of the solution vector during each
-step, with an O(n<sup>2</sup> + n log n) complexity per iteration. Its convergence rate is on par with SOR, and it permits parallel implementations.
+We also demonstrate how to evaluate the worth of such methods, how to prove their competitiveness and how they can be mutated to allow parallel computations, as well as challenging and beating methods used for benchmarking in this aspect.
 
 # Index Terms
 
-Gauss-Seidel, Parallel Computing, Hybrid Methods, Optimization, Dynamic Programming.
+Algorithm design and analysis, Convergence of numerical methods, Entropy-based heuristic, Dynamic programming, Heuristic algorithms, Hybrid method, Parallel programming
